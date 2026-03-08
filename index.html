@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Corinne Stroum</title>
+  <style>
+    :root {
+      --bg: #f7f4ec;
+      --paper: #fffdf8;
+      --ink: #1c1c1c;
+      --muted: #5f5a52;
+      --line: #d8d0c2;
+      --accent: #1f3c88;
+      --max: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .wrap {
+      width: min(92%, var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.92);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+
+    nav .name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.25rem;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    .hero {
+      padding: 5rem 0 3rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      line-height: 1.05;
+      margin: 0 0 1rem;
+      max-width: 11ch;
+    }
+
+    .hero p {
+      max-width: 52rem;
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin: 0 0 1.5rem;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 0.7rem 1rem;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .button.primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    section {
+      padding: 2rem 0 3.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    section h2 {
+      font-size: 2rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 48rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 1.25rem;
+      min-height: 220px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+
+    .meta {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .placeholder {
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,0.45);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="name">Corinne Stroum</div>
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experiments">Experiments</a></li>
+          <li><a href="#field-notes">Field Notes</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="top" style="border-top: none;">
+      <h1>Work at the edge of systems, stories, and machines.</h1>
+      <p>
+        I build across enterprise AI, knowledge architecture, and physical computing.
+        This site is the canonical home for my work; projects, experiments, and notes
+        that connect strategy to things you can actually see, run, and touch.
+      </p>
+      <div class="hero-links">
+        <a class="button primary" href="#work">View work</a>
+        <a class="button" href="https://github.com/cpstroum" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="button" href="#field-notes">Field Notes</a>
+      </div>
+    </section>
+
+    <section id="work">
+      <h2>Work</h2>
+      <p class="section-intro">
+        Selected projects and repositories. This section can later become polished case studies with context,
+        constraints, and outcomes.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3><a href="https://github.com/cpstroum/http-cpstroum.github.io-" target="_blank" rel="noreferrer">http-cpstroum.github.io-</a></h3>
+          <div class="meta">Public repository · updated Mar 8, 2026</div>
+          <p>
+            Your portfolio site repository. This is the natural anchor for the whole operation; the repo that turns the rest
+            of your work into a coherent body rather than a pile of fascinating digital artifacts.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3><a href="https://github.com/cpstroum/heart-on-my-shirt" target="_blank" rel="noreferrer">heart-on-my-shirt</a></h3>
+          <div class="meta">C++ · wearable computing · updated Feb 28, 2026</div>
+          <p>
+            Wiring up a SCAN beaming heart shirt for a festive holiday party shirt. A strong example of physical computing,
+            communication, and a bit of joyful engineering nonsense in textile form.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3><a href="https://github.com/cpstroum/plasticity" target="_blank" rel="noreferrer">plasticity</a></h3>
+          <div class="meta">Python · updated Jan 31, 2026</div>
+          <p>
+            Upgrade my aircast boot as an exoskeleton using TFT Gizmo and LED strip with sounds. This belongs squarely in
+            the category of embodied interface design colliding with resilience and adaptation.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3><a href="https://github.com/cpstroum/birdmail" target="_blank" rel="noreferrer">birdmail</a></h3>
+          <div class="meta">Python · updated Jan 14, 2026</div>
+          <p>
+            Open the door to a new visitor; shows birds and plays their sounds with each interaction. Adafruit Circuit
+            Playground Bluefruit plus TFT Gizmo plus switch. One of your clearest examples of experiential hardware.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3><a href="https://github.com/cpstroum/flight-tracker-bluefruit" target="_blank" rel="noreferrer">flight-tracker-bluefruit</a></h3>
+          <div class="meta">C++ · 8 stars · MIT License · updated Jul 20, 2025</div>
+          <p>
+            Show planes nearby using your Adafruit Circuit Playground Bluefruit and TFT Gizmo. This is a strong bridge
+            between live data, embedded display design, and your taste for little machines that reveal hidden systems.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="experiments">
+      <h2>Experiments</h2>
+      <p class="section-intro">
+        Smaller builds, prototypes, and strange little machines that taught me something.
+      </p>
+
+      <div class="grid">
+        <article class="card placeholder">
+          <h3>Birdmail case study</h3>
+          <p>
+            Expand this into a richer narrative page with photos, logic diagrams, content system notes, and what made it
+            engaging over time.
+          </p>
+        </article>
+
+        <article class="card placeholder">
+          <h3>Wearables and responsive objects</h3>
+          <p>
+            Reserve for Plasticity, the heart shirt, and future body-adjacent builds where interface and identity get weird
+            in productive ways.
+          </p>
+        </article>
+
+        <article class="card placeholder">
+          <h3>Offline AI and tiny interfaces</h3>
+          <p>
+            A place for experiments that combine constrained hardware, procedural behavior, and thoughtful feedback instead
+            of cloud dependence.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="field-notes">
+      <h2>Field Notes</h2>
+      <p class="section-intro">
+        Writing, observations, and thinking in public; especially the connective tissue between technical systems, design,
+        governance, and organizational reality.
+      </p>
+
+      <div class="grid">
+        <article class="card placeholder">
+          <h3>LinkedIn essays</h3>
+          <p>
+            Curate standout posts rather than dumping a full feed. Pick the ones that best represent your thinking.
+          </p>
+        </article>
+
+        <article class="card placeholder">
+          <h3>Project logs</h3>
+          <p>
+            Short notes on what changed, what failed, and what you learned.
+          </p>
+        </article>
+
+        <article class="card placeholder">
+          <h3>Talks and artifacts</h3>
+          <p>
+            Add presentations, Canva videos, and visual explainers that deserve a longer shelf life than one post cycle.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Corinne Stroum · Seattle, WA · Built on GitHub Pages
+    </div>
+  </footer>
+</body>
+</html>
