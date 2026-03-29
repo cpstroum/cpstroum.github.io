@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Field Notes — Corinne Stroum</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+  :root {
+    --bg: #f7f4ec;
+    --paper: #fffdf8;
+    --ink: #1c1c1c;
+    --muted: #5f5a52;
+    --line: #d8d0c2;
+    --accent: #1f3c88;
+    --accent-light: #e8edf7;
+    --tag-bg: #ede9e0;
+    --max: 1200px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { width: min(92%, var(--max)); margin: 0 auto; }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--line);
+    background: rgba(255,253,248,0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 1rem;
+  }
+  .nav-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.25rem;
+    padding: 0;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+  }
+
+  /* ── Hero ── */
+  .page-hero {
+    padding: 3.5rem 0 2rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  .page-hero p {
+    color: var(--muted);
+    max-width: 48rem;
+    font-size: 1.05rem;
+  }
+  .post-count {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── Filters ── */
+  .filter-bar {
+    padding: 1.25rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 53px;
+    background: rgba(247,244,236,0.97);
+    backdrop-filter: blur(8px);
+    z-index: 90;
+  }
+  .filter-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 0.25rem;
+  }
+  .filter-chip {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.15s;
+  }
+  .filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .search-wrap {
+    margin-left: auto;
+    position: relative;
+  }
+  .search-wrap input {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.75rem 0.3rem 2rem;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 999px;
+    width: 200px;
+    outline: none;
+    transition: border-color 0.15s, width 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); width: 260px; }
+  .search-wrap::before {
+    content: '⌕';
+    position: absolute;
+    left: 0.65rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+
+  /* ── Grid ── */
+  .results-meta {
+    padding: 1rem 0 0.5rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+    padding: 1rem 0 4rem;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s, transform 0.15s;
+    animation: fadeIn 0.3s ease both;
+  }
+  .card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border-bottom: 1px solid var(--line);
+    background: var(--tag-bg);
+  }
+  .card-image-placeholder {
+    height: 4px;
+    background: var(--accent-light);
+  }
+
+  .card-body {
+    padding: 1.1rem 1.25rem 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .card-theme {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ink);
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-link {
+    font-size: 0.82rem;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+  }
+  .card-link:hover { text-decoration: underline; }
+
+  .no-results {
+    grid-column: 1/-1;
+    text-align: center;
+    color: var(--muted);
+    padding: 4rem 0;
+    font-style: italic;
+  }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 2rem 0 3rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="nav-name"><a href="index.html" style="color:inherit">Corinne Stroum</a></div>
+      <ul>
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="index.html#experiments">Experiments</a></li>
+        <li><a href="writing.html">Field Notes</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="page-hero">
+      <h1>Field Notes</h1>
+      <p>Writing, observations, and thinking in public — connecting technical systems, design, governance, and organizational reality.</p>
+      <span class="post-count" id="post-count">62 posts</span>
+    </div>
+
+    <div class="filter-bar">
+      <span class="filter-label">Filter</span>
+      <button class="filter-chip active" data-theme="all">All</button>
+      <button class="filter-chip" data-theme="Hardware &amp; Making">Hardware &amp; Making</button>
+      <button class="filter-chip" data-theme="Healthcare">Healthcare</button>
+      <button class="filter-chip" data-theme="AI Strategy">AI Strategy</button>
+      <button class="filter-chip" data-theme="Leadership">Leadership</button>
+      <button class="filter-chip" data-theme="Observations">Observations</button>
+      <div class="search-wrap">
+        <input type="text" id="search" placeholder="Search posts…" oninput="render()"/>
+      </div>
+    </div>
+
+    <div class="results-meta" id="results-meta"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Corinne Stroum · Seattle, WA · <a href="index.html">Back to portfolio</a>
+  </div>
+</footer>
+
+<script>
+const POSTS = [{"text": "From sensors to interaction, here's the Nemma I promised! These Tamagotchi vibes and happy chirps started with my exoskeleton boot; Plasticity was a project that pulled me into motion and sensors and got me thinking about how my devices should respond beyond buttons. Nemma is the continuation. She lives on a UNIHIKER board and reacts to light, sound, and touch; both soft and hard buttons. Her \"rea\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7442576022149136384/", "image": "", "theme": "Hardware & Making"}, {"text": "For my next hack, I'm building a tiny digital creature. After months of chatbots and agents, or burning myself on my soldering iron, I wanted to build something.. cuter. Something for that Tamagotchi nostalgia; I'm calling it a Nemma. She lives inside a small Unihiker touchscreen computer. The name came from a project I was /supposed/ to be finishing: the Stemma soil sensor. Right now Nemma is ver\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7439676168649252864/", "image": "https://media.licdn.com/dms/image/v2/D5622AQGwWYvE6gyykA/feedshare-shrink_800/B56Zz5dlQbHoAc-/0/1773711807816?e=1776297600&v=beta&t=smQ0HXkgaQeLnOx2fjugDP-lf4FCg4fXxZutZw91CKA", "theme": "Hardware & Making"}, {"text": "Healthcare keeps saying we can leapfrog the earlier waves of technology and go straight to AI. However, living through AI adoption makes this feel more like cooking without a recipe. The problem is that the earlier waves of tech helped to develop some foundational skills that healthcare is now missing. Cooking without a recipe can be great once you understand how cooking works. Experienced cooks d\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7437142734278205441/", "image": "https://media.licdn.com/dms/image/v2/D5622AQErOmvfrXnpvA/feedshare-shrink_800/B56ZzV4M8TI0Ac-/0/1773114806384?e=1776297600&v=beta&t=7uEtozK8om2yZfvA607RAJg67MrP0TdXJ0q2zO-FsRA", "theme": "Leadership"}, {"text": "Every February, I used to celebrate the robots. This year, we are closing the distance between \"what a nerd\" and \"this is becoming real.\" My personal projects were the first signal that software now has a relationship with the physical world. Vision language action models and world models are narrowing the gap between seeing and doing; once learning and motion reinforce each other, robotics timeli\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7427022289143209984/", "image": "https://media.licdn.com/dms/image/v2/D5622AQHLMI8Hq-Lyxg/feedshare-shrink_800/B56ZxF7z7NGsAk-/0/1770699833370?e=1776297600&v=beta&t=ZfB47Cq-GH61wKBalomfV6_z9807doq6b_1elswM8uA", "theme": "Hardware & Making"}, {"text": "Plasticity: a month in the making. Want to see it live? I'll be at AI2 tonight with SeaHealthTech. This build was different than Birdmail because it's is meant to be seen outside my house. It marks a modified return to my life after a month of recovery. My boot weighs me down but I needed to feel like I owned it, so my daughter and I brainstormed. What better way to do that than with some futurist\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7424470502964097024/", "image": "", "theme": "Hardware & Making"}, {"text": "We are hiring for a Sr. Manager, STAR Quality Programs. If you're passionate about continuous improvement, eager to leverage AI innovations, and ready to make a impact with our senior members, message me. I'd love to share what being a SCAN Rebel is all about! Derek McFerran https://lnkd.in/gX-Nq_cJ", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7417998635537248257/", "image": "", "theme": "Healthcare"}, {"text": "I used my hacking to fighting loneliness with Birdmail. Playing into millennial stereotypes, I started admiring the birds outside my window a few years back. I thought about their spontaneous visits when I got major surgery and began 6 weeks off my feet. I decided to create a device that would bring that same delight right to my sofa. I put it together with the gear my sister Lauren Pascale gave m\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7417222736189603840/", "image": "", "theme": "Hardware & Making"}, {"text": "Today I become a datapoint; an institutional claim with CPTs 28740-LT and 28298-LT, hospital outpatient, revenue code 0360. My surgery is the culmination of years of pain and ineffective correction, but doesn't capture the \"intangible\" activities that will actually determine how this goes. This claim doesn't show prehabilitation; it misses the physical conditioning, the mental rehearsal, the delib\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7411424523385745408/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEqyMdRBqyy_Q/feedshare-shrink_800/B56ZtRruEDJsAg-/0/1766601975469?e=1776297600&v=beta&t=qAwvBfxiELx9HWramT6CnJIAbHxxNc9AhE_JVYvVPY4", "theme": "Healthcare"}, {"text": "\"Six weeks to go-live\" and \"no-cost PoC\" are trigger phrases for your #healthcare buyers. Let's talk about why that doesn't sell the way you think it does. #FridayFun. The reality is that startups operate on *foundationally different platforms* and have very different expectations and experiences with their tech stack.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7410376446092697600/", "image": "https://media.licdn.com/dms/image/v2/D5622AQH9iDBQwIqybw/feedshare-shrink_2048_1536/B56ZtbyHD4KcAw-/0/1766771421847?e=1776297600&v=beta&t=R4fyNKOTmDMSV4wPzVRmvBWS73EOvJetb_3hJXx_CeE", "theme": "Observations"}, {"text": "I read an article saying how the Doorman Fallacy is why #AI pilots often fail. Think about it. You take over a building and you need to find efficiencies, to make up for your investment. It may seem easy to replace the person staffing the door with a badge system. Less money spent on benefits and headcount. The Doorman Fallacy, the article explains, is that you're losing more than someone who open\u2026", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7394407383176863744/", "image": "https://media.licdn.com/dms/image/v2/D5622AQHaWdNSHQGieA/feedshare-shrink_800/B56Zp2aGftJ8Ag-/0/1762923147389?e=1776297600&v=beta&t=m-SLxv06HAveG6u6CK92pkNvIuQL-zXjqmMqB9ybLOk", "theme": "AI Strategy"}, {"text": "Heading home from #HLTHUSA, all the signs were there. Are we being responsible or do we need a reminder? So many booths were broadcasting #AI that I got worried: I spotted only one or two that were focused on governance and security.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7387489295869177856/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEQuc8CFMdANQ/feedshare-shrink_800/B56ZoUscbiIYAg-/0/1761283787365?e=1776297600&v=beta&t=764frnLw_w8ETH_QV31RrlxI64ARDsaTgSg53rZLwaw", "theme": "AI Strategy"}, {"text": "Prepping for a talk at #HLTHUSA reminded me where impact often lives. Not on the main stage, but in the bowels of the theater, working hard without the spotlight. #Healthcare is no different... somewhere, deep in your org, one or two people are probably keeping something from collapsing.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7387126907936501760/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFjTKQCOhYWSw/feedshare-shrink_800/B56ZoPMslQKAAg-/0/1761191581334?e=1776297600&v=beta&t=rJKWifvs75qZ5Iowou-A4KU_PYsh88X9hZys1XAGBUQ", "theme": "Leadership"}, {"text": "A 90min panel at 8a during #HLTHUSA? Yes, we can! In a time of #AI and buzzwords, we got to the crucial relationships and infrastructure necessary to improve #healthcare ops. A little optimistic, a little introspective, all impactful.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7386438610373341185/", "image": "https://media.licdn.com/dms/image/v2/D5622AQHEZRirZF2Oeg/feedshare-shrink_800/B56ZoFKbqIKAAg-/0/1761023214249?e=1776297600&v=beta&t=-gCDbzLoIcCUMLnR6gD6jq_akJbphy8qcpiJw6uIBq4", "theme": "Leadership"}, {"text": "We've finished the story, but are we going to read it the same way next time? This week marks Simchat Torah, a holiday which acknowledges that we are finished reading our story for the year and /starting over/. This gives us the opportunity to interpret the story a different way this time!", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7384585168709332993/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFvi1OXtatiow/feedshare-shrink_800/B56ZnZbpBWJYAk-/0/1760289527865?e=1776297600&v=beta&t=LKW5kriDh0okrGPbvQ5-oP47ysMu5z-OJSZbt43Ho2U", "theme": "Observations"}, {"text": "Are our processes holding us back from experimenting creatively with #AI? Yesterday, I got a haircut. My stylist was showing me #AI videos he's made with Tencent Hunyuan and ByteDance Seed to mirror some cartoon books he's created. They blew me away: continuity, attention to physics, and an alignment of image and video.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7383503029288886272/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFKjTGXSOFKDg/feedshare-shrink_800/B56ZnZaxEpKMAg-/0/1760289298612?e=1776297600&v=beta&t=Zy7FPFA4pxi1JU1bBcNSRbE7bQUCW8SObyKQDzTk5fc", "theme": "Observations"}, {"text": "Let's hear it for the lifers. The ones who are invested in the mission instead of just the role. The ones whose love for the work is downright infectious. The ones who reinvent themselves in service of something new without losing sight of the big picture.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7374083468844118016/", "image": "https://media.licdn.com/dms/image/v2/D5622AQGUtTgKohWftQ/feedshare-shrink_800/B56ZlU8RkLKIAg-/0/1758066711899?e=1776297600&v=beta&t=6SyZQkK2ADna_PnU_Pbrzdn_Xx6FXgfjk2kHxd3Dme8", "theme": "Observations"}, {"text": "\"I want a seat at the table.\" \"I want to think strategically instead of act tactically.\" I often hear these aspirations from those in early and mid-career roles. It's /good/ to want to grow. But I also think it's worth pausing to reflect on why we seek title growth.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7371554600799100928/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFFvpXupZba9Q/feedshare-shrink_800/B56Zk0F0l1I4Ak-/0/1757515572008?e=1776297600&v=beta&t=kEhA3rsHSXDvDnorYRzAoYxPIBMIRKVrr98OGkJbdDk", "theme": "Leadership"}, {"text": "The #AI threat no one's talking about is... your colleagues and your partners. It's the partner who unknowingly asks Gemini to clean up last week's meeting notes and uploads a conversation about your entire roadmap.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7369010041665880064/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEhB8PDHYe0ow/feedshare-shrink_800/B56ZkNTS8WHcAk-/0/1756864787638?e=1776297600&v=beta&t=0k5R4bYsVd_hXxWy0utuX7fRyheqs_5rC3FJE_bbu3Q", "theme": "Observations"}, {"text": "Most people hear New Jersey and think mobsters, big pharma, and pollution thanks to Newark Airport & SNL jokes. I hear New Jersey and think cornfields and raspberry jam from my local U-Pick farm.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7367197231893925891/", "image": "https://media.licdn.com/dms/image/v2/D5622AQE2XShP3LHGiA/feedshare-shrink_800/B56Zj2K14VHcAk-/0/1756476694869?e=1776297600&v=beta&t=cXThCc-Hj_lY_yCagh-N4wuLXynWCyEwzFvQ7KBMGYk", "theme": "Observations"}, {"text": "Big tech thinks #healthcare is a Bermuda Triangle but I think it's more like the Sentinel Islands. It's because the signal, the technology, isn't what disappears: /you do/.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7358167315143675904/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEJGXJ-gh9qnA/feedshare-shrink_800/B56Zh12KdsHQAk-/0/1754323794670?e=1776297600&v=beta&t=cJR4HdXB-7fE1fD5y86drJYZEDh2BftVe7-EAI5RNls", "theme": "Observations"}, {"text": "\"Where is that plane going?\" My daughters asked me this question and unknowingly kicked off my Hot Hack Summer. I've been working with my new Adafruit Industries Circuit Playground Bluefruit and the TFT Gizmo add-on display to build a real-time plane tracker.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7353061223866789889/", "image": "", "theme": "Hardware & Making"}, {"text": "When was the last time you felt safe to fail? I'm talking about the kind of failure where you tried something ambitious, it didn't work, and you didn't feel judged. One of the best parts of working in #AI has been the uncertainty.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7350907676786126851/", "image": "https://media.licdn.com/dms/image/v2/D5622AQELt0EmeqJYmA/feedshare-shrink_800/B56ZgOrj_BHQAk-/0/1752592962161?e=1776297600&v=beta&t=izXLC9e3b_nqQEefWW8rdGlMbwMsmTz-rB7SjUZ-3xE", "theme": "Leadership"}, {"text": "It's too hot to solder, so I put down the iron and picked up a screwdriver instead! After a decade, I've traded up to an Adafruit Industries Circuit Playground Bluefruit with a TFT Gizmo! I kicked off a new build last night by experimenting with the display.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7348717569228402688/", "image": "", "theme": "Hardware & Making"}, {"text": "Doing the right thing. Let me tell you an #ethics lesson that takes up space in my head. My freshman year at Carnegie Mellon University we took a Responsible Computing course.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7345451103360077824/", "image": "https://media.licdn.com/dms/image/v2/D5622AQG_0SWdV2TBxw/feedshare-shrink_800/B56Ze8hntQH8Ag-/0/1751214620965?e=1776297600&v=beta&t=RNamKDKbK97TqCCAYsUhelxNOUiP0evqDaH09oxbRj8", "theme": "Observations"}, {"text": "Partnering with Learning & Development and our vendor partners to run this #AI Hackathon was a highlight of my career. If you've never attended one, find an event like this in your community.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7344050015524241409/", "image": "https://media.licdn.com/dms/image/v2/D5610AQHVnLEUA4LFRA/image-shrink_800/B56ZepLjhMG0Ac-/0/1750890069566?e=1775412000&v=beta&t=7CCtcBcB7BN1zXbZ56seDwKYmmT4upvIyeHpHqVsZ2Y", "theme": "Hardware & Making"}, {"text": "Today we're hosting our first company-wide Hackathon and here's the trick: it marks more than just a day of experimentation. The real trick isn't teaching #AI but /transformation/.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7338568188374196251/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEkcOsNyhGm-g/feedshare-shrink_800/B56ZddWdf_G0Ao-/0/1749619086353?e=1776297600&v=beta&t=hzEj4qKaCpxOwKlDkMSVHr-peIh6AXCgDepIdzhK3H4", "theme": "Hardware & Making"}, {"text": "I haven't been posting as often lately because\u2026 I've been doing the work. I'm not doing the glossy #AI demo kind of work I completed as a vendor, but the arduous work of * #culture change*.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7337844679478038529/", "image": "https://media.licdn.com/dms/image/v2/D5622AQGwP6EzuUYxrQ/feedshare-shrink_800/B56ZdHkGMcH8Ag-/0/1749252337607?e=1776297600&v=beta&t=aFptR22VQm6gdouZoVGAd9USnHDJ5LIFzb1kL9wmCqI", "theme": "AI Strategy"}, {"text": "Everywhere I look, someone is trying to \"save healthcare.\" - Tech firms are throwing #AI agents at the same old problems. Every company claims to have cracked risk adjustment with /this/ model, /this/ agent.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7325535874102833152/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEVWSFpVHLm1g/feedshare-shrink_2048_1536/B56ZamIDz2HUAw-/0/1746543853585?e=1776297600&v=beta&t=fVo-hn7NNvKDe-zeyHbK_kQgmZ1vu0eyxk0dDeqzxhw", "theme": "Observations"}, {"text": "Lots of people talk about \" #AI guardrails\" but few talk about what that actually means. It isn't magic. It isn't trust. It's part of the lifecycle.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7322998117811847169/", "image": "https://media.licdn.com/dms/image/v2/D5622AQF0rIwgfTG4MQ/feedshare-shrink_800/B56ZZ_eyXgHUAk-/0/1745895500378?e=1776297600&v=beta&t=MoGjR7rsN36DZe3EGeORCBIc-BAeHbj1yxyqyxg-bL4", "theme": "AI Strategy"}, {"text": "\"AI governance is the process by which you achieve responsible AI.\" \u2013 Shelby Tallent That quote landed hard for me last week at the Institute for AI Transformation Summit in Seattle...", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7317581899739156480/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEcmvarQzS6vA/feedshare-shrink_800/B56ZY1FR0eH0Ao-/0/1744647305337?e=1776297600&v=beta&t=QyJWI24uPKjlIGBCjflCiC0SnOC6Z6ruKhtvLExbUwo", "theme": "AI Strategy"}, {"text": "Friday Feels: don't forget we are living in the bubble of people who care about #AI. My LinkedIn feed would have me believing that AI is ubiquitous.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7316672053804244992/", "image": "https://media.licdn.com/dms/image/sync/v2/D5627AQGeAWaKlL8qkw/articleshare-shrink_480/B56ZYg1eSQHoAo-/0/1744307611462?e=1775412000&v=beta&t=gXiqJUq9ovpOydXuF6missQDkc1HWOxidybqYxE5Cb8", "theme": "Observations"}, {"text": "In the 2010s, the Microsoft company store sold gear that read: \"The #Geek Shall Inherit the Earth.\" Now that the definition of \"geek\" is changing, this is a surprisingly prescient succession plan.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7313222378891722753/", "image": "https://media.licdn.com/dms/image/v2/D5622AQE0REvcpe7wBg/feedshare-shrink_800/B56ZX3I_2MHEAg-/0/1743608086861?e=1776297600&v=beta&t=er2JpIIzdS0dQZkjyYq2oy4iaC-OFkTZ84kr6JUHaFw", "theme": "Observations"}, {"text": "The value of being hands-on? You learn how things fail. This week, I'm prepping for an #AI #hackathon, and I'll be sharing what I learn along the way.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7307443693005770754/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFezRNueNsIcQ/feedshare-shrink_1280/B56ZWlBUYjHsAk-/0/1742230341508?e=1776297600&v=beta&t=6J0ClC3JqWnQFoSa3gOuW2M4TXAV3bN85Xp1HKWa5GU", "theme": "Hardware & Making"}, {"text": "\"Have you heard of <word>.<AI or health>?\" Let me check the Protege market map... My takeaways: 1. Exponential growth in the #healthcare #AI market.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7306718665071022080/", "image": "https://media.licdn.com/dms/image/v2/D5622AQGMuDjpXLHWjg/feedshare-shrink_800/B56ZWat6D.HsAg-/0/1742057481239?e=1776297600&v=beta&t=SX1Lv2RnR100Dr0kWVISwp9qShOcy7-BZGW9buJI6po", "theme": "Observations"}, {"text": "Much has been said about the video of two #AI agents communicating \"in a secret language\". There's no mystery here. Developers *explicitly instructed* the conversational agents to use ggwave, a data-over-sound protocol.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7300911335129722880/", "image": "https://media.licdn.com/dms/image/v2/D5622AQENVdwsF_JYIQ/feedshare-shrink_800/B56ZVEfI3XHEAg-/0/1740610770656?e=1776297600&v=beta&t=dphLfv3i8OyOODHjz8U674sIGB_P5BV3HiRqPpDGjro", "theme": "Observations"}, {"text": "My dream is that #AI will give us more time for human connection in #healthcare. Instead, I'm worried that many vendors seem intent on replacing it altogether.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7299824155804200961/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEnWAOHRC1B3A/feedshare-shrink_800/B56ZUrCVZOGsAo-/0/1740183787687?e=1776297600&v=beta&t=7QzCGMzDFR9VMbBi_FFYoPpf1EMzzMp1JietqeWBbEc", "theme": "AI Strategy"}, {"text": "If You Give a Mouse a Copilot: why every vendor is now an #AI platform. Two AI capabilities are reshaping the tech vendor marketplace.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7297640644179542019/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFPvnB2s4J8AA/feedshare-shrink_2048_1536/B56ZUMBfYGHEAo-/0/1739663473078?e=1776297600&v=beta&t=KkVBtqYG7ejH8RAMqr-Abyd7PHepEu3WJB0EHfCP2kM", "theme": "AI Strategy"}, {"text": "Are You Measuring Success or Just Measuring Activity? In 2023, I went through #OKR training with Sara Lobkovich, JD, NBC-HWC, and it reshaped my definition of success.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7295484151627952128/", "image": "https://media.licdn.com/dms/image/v2/D5622AQHrnaDuuDlO_Q/feedshare-shrink_800/B56ZT7ELQvGoAg-/0/1739378963845?e=1776297600&v=beta&t=XDDWsZ2mNHLgTKLl_Cpd_WJtNeyOmWikUbVs0u_3e9g", "theme": "Leadership"}, {"text": "Let's flash back to convocation at Carnegie Mellon University and my first encounter with Dr. Jared Cohon (z''l), University President - who we lost this week.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7175891180503650304/", "image": "https://media.licdn.com/dms/image/v2/D5622AQHI6bZ7aub1uA/feedshare-shrink_800/feedshare-shrink_800/0/1710865777447?e=1776297600&v=beta&t=AP3lnkeWNzfqiXt5ovsGlV0kRJEcHnp5y_klYV7SWos", "theme": "Observations"}, {"text": "Years ago, during YET ANOTHER reorganization, I was introduced to \"Managing Transitions\" by William Bridges. Today, I want to share an insight from the book that reshaped my approach to #change.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7173016282114453504/", "image": "https://media.licdn.com/dms/image/v2/D5622AQGIVf4-rzWfDw/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1710180348848?e=1776297600&v=beta&t=4ftLz-vt4qV7PpyPuQt33FpkQYMBKZlQy3gveimelo8", "theme": "Healthcare"}, {"text": "Over the last few months, I've been part of the team rolling out Emerging Tech at SCAN - our first charter was education, which is now a job perk!", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7103419602642108416/", "image": "https://media.licdn.com/dms/image/sync/v2/D5627AQH-jmKGAzbWPA/articleshare-shrink_480/articleshare-shrink_480/0/1725021570448?e=1775415600&v=beta&t=YadvuO2HTGC2VnoLsiGQhXR-D1ajxsKHQ9O-fsqGbVs", "theme": "Leadership"}, {"text": "I've been on-site this week with SCAN and my older daughter packed me some friends to keep me company. Their presence along the way has anchored the themes of this visit.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7103051314913312768/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFC4f4NkraRsg/feedshare-shrink_800/feedshare-shrink_800/0/1693493810513?e=1776297600&v=beta&t=ievTESKWndzjQmlVuYkWbvoog307ZW_XpCu9x9Qfwp4", "theme": "Observations"}, {"text": "I've been working recently on the #healthcare enterprise's approach to #AI and #ChatGPT. This article nails it. Due to open-source tech and commoditized Foundation models, vendors pop up daily to pitch their new innovations.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7101981231046688768/", "image": "https://media.licdn.com/dms/image/sync/v2/D4D27AQFBIcKZOr1XRQ/articleshare-shrink_480/articleshare-shrink_480/0/1711949196688?e=1775415600&v=beta&t=V515NnAEadxkHiBVpzeVdYOXMO5LRYCjBdURbdPmCcg", "theme": "AI Strategy"}, {"text": "Colleagues in #healthcare: how well are you vetting your vendors? Are you considering the risk of PHI exposure when you hype emerging technologies?", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7100881856379703296/", "image": "https://media.licdn.com/dms/image/sync/v2/D5627AQHZ5dObnHDgrA/articleshare-shrink_480/articleshare-shrink_480/0/1762378583228?e=1775415600&v=beta&t=fOcKz_pyGfzDDZGNI-A-te9gKgSF2L06G4ejZ6XKYh0", "theme": "Healthcare"}, {"text": "Each week I take my girls to the #library and load up with books. That's not all we get: it's a peek into a #healthcare beacon and community safety net.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7099793259303993344/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEXfGQgJRMukg/feedshare-shrink_800/feedshare-shrink_800/0/1692722619278?e=1776297600&v=beta&t=swBY006xm43dqx_lBGtvdz7iCCQBwz3_3Q0UbJbMl5E", "theme": "Observations"}, {"text": "I'm on my annual family vacation to Seaside, OR and Josh Goode gave me a tip to check out: the former Red Lion Inn & Suites. Why? CareOregon purchased this hotel in March with the intent of supporting coordinated care organization (CCO) activities for Clatsop County.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7097994425859018753/", "image": "https://media.licdn.com/dms/image/v2/D5622AQFT87MTTLzzLA/feedshare-shrink_800/feedshare-shrink_800/0/1692293744218?e=1776297600&v=beta&t=yXvb7prXjGRSvUqYmUtNWAU0kNGQcCekCmM_xDTP0Po", "theme": "Observations"}, {"text": "Results of a Nationwide survey on long-term care ( #LTC) are circulating with headlines like, \"Many Americans believe AI will provide their in-home care as they age\".", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7097348161299488769/", "image": "https://media.licdn.com/dms/image/sync/v2/D4D27AQF-QHu2B-cfFQ/articleshare-shrink_800/articleshare-shrink_800/0/1711228686834?e=1775415600&v=beta&t=FWZyalnvpOA38bwPn9tUpnBh4EQbATYdX74hFZvvcoc", "theme": "Healthcare"}, {"text": "How would you feel if you didn't fully understand one of the most important purchases you make- and are locked into annually? That's the experience for nearly half of #Medicare members who utilize Medicare Advantage.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7095440871373864961/", "image": "https://media.licdn.com/dms/image/sync/v2/D5627AQHvLgT8Hbf24g/articleshare-shrink_480/articleshare-shrink_480/0/1772768515138?e=1775415600&v=beta&t=9opvZxZUfUWE35XxtdypU0FA8anf6y8bua4xkTFem2s", "theme": "Healthcare"}, {"text": "It feels like the state of #healthcare is on fire - full of possibilities, and full of unseen risk. My Engineering Ethics class taught me that our work is social experimentation - we are testing on people.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7091815964580741120/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEF4W5AaPrc7A/feedshare-shrink_800/feedshare-shrink_800/0/1690820684479?e=1776297600&v=beta&t=TgcaShERJmjYNryxNXXQSBfvuCjdnlr97OIlaJDgqug", "theme": "Observations"}, {"text": "You do not have to be your circumstances. In the last few months, my household has had a string of bad luck. They've left me frazzled, with a feeling constant dread as though something else bad will happen.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7090783042654400514/", "image": "https://media.licdn.com/dms/image/v2/D5622AQGm-WhSRVn1NQ/feedshare-shrink_800/feedshare-shrink_800/0/1690574416337?e=1776297600&v=beta&t=0VVA6xko_trcxtAOMHzk5GRSdRqkOeJ9ipHuYjgNGgU", "theme": "Observations"}, {"text": "I usually post about digital impact to #healthcare, but I want to go back to my biomedical engineering roots with this one. This article explains how WA state resident received a liver transplant ahead of a heart transplant in order to promote organ acceptance.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7087474471824982017/", "image": "https://media.licdn.com/dms/image/sync/v2/D5627AQFR_adFjaN8wg/articleshare-shrink_480/articleshare-shrink_480/0/1754049053178?e=1775415600&v=beta&t=c_eY0UJu44Pp0XCH6jS8Mp1e2EOyHr8RnnrU-JTyEKI", "theme": "Healthcare"}, {"text": "It doesn't take hacks to boost your #productivity, just a little #focus. Years ago, Carnegie Mellon University Alumni Association hosted a discussion on \"Deep Work\" by Cal Newport.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7086751408951070720/", "image": "https://media.licdn.com/dms/image/v2/D5622AQEAErhWeqNkXQ/feedshare-shrink_800/feedshare-shrink_800/0/1689551959881?e=1776297600&v=beta&t=4tYIiDdNGz7vHNWZbLkMyXzQfeeBpNEhXtZIhoc5OmE", "theme": "Hardware & Making"}, {"text": "I've been at my role for a week and want to reflect on one word: WONDER. When my younger daughter was ~6 months old, she woke me daily in the night.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7026238993952366592/", "image": "https://media.licdn.com/dms/image/v2/C5622AQFfyWo7x_oZUg/feedshare-shrink_800/feedshare-shrink_800/0/1675185916486?e=1776297600&v=beta&t=FzgKCb_nUkpq4IO-FQMtK_urUZsOr2AZttxGl9KRnvY", "theme": "Leadership"}, {"text": "I am traveling and had a moment of self-inquiry after creating a new Netflix profile. On this day when we think about our biases, I am challenging you to Reset Your Algorithm.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7020804365888217088/", "image": "https://media.licdn.com/dms/image/v2/C5622AQFAbqWpG-mOjw/feedshare-shrink_800/feedshare-shrink_800/0/1673834384959?e=1776297600&v=beta&t=Pp_yVkOzk1AQP5lfLWVVb7newpt3T3dailRBneXGDVI", "theme": "AI Strategy"}, {"text": "\"The disruptive power of MLaaS/AIaaS business models is their unique monetization. Models don't do 1 thing, and the breadth of potential applications is much greater than traditional software.\" - Vin Vashishta", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7019709652397342722/", "image": "https://media.licdn.com/dms/image/sync/v2/D4E27AQG96Jbikl4oBA/articleshare-shrink_480/B4EZf83SrXH4Ao-/0/1752294044163?e=1775415600&v=beta&t=TdvbAC-49EijkuxGCtIDpdPlVZqGDdR4RbEyyfxYPzY", "theme": "Observations"}, {"text": "My focus for this year will be Impact. Each year, I set goals around a focus word instead of being prescriptive about the actions that I may take.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7015815618801143808/", "image": "https://media.licdn.com/dms/image/v2/C5622AQFPHlckZJNzzg/feedshare-shrink_800/feedshare-shrink_800/0/1672700789989?e=1776297600&v=beta&t=N3jLKmbGxXNL886MxK54fqQ-HnNynL1U9747J_nmQVM", "theme": "Leadership"}, {"text": "I skimmed a discussion on whether #healthcare was a unique market for #tech or held a pattern that exists in all industries. In my mind, the number one thing unique to healthcare is medical billing and coding.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7014282705953595392/", "image": "https://media.licdn.com/dms/image/v2/C4E0BAQE3JZqeBtEAZA/company-logo_100_100/company-logo_100_100/0/1630573688579/clarity_quest_marketing_logo?e=1776297600&v=beta&t=cZayGveTdjAZK0y1tq4LfltSFzkz6FeBtayrXwjQJ-E", "theme": "Healthcare"}, {"text": "I've seen a shift for #analytics and #bi roles to move into \"Insights Manager\" instead. It isn't enough to churn out data or reports when the tools have become so accessible.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7013984232779763712/", "image": "", "theme": "Observations"}, {"text": "I kept busy with teaching mini-courses on #machinelearning as well as #healthIT career coaching. However, I am now moving towards my dream role.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:7013208748714311680/", "image": "https://media.licdn.com/dms/image/v2/C5622AQGlaYy7omw_Dg/feedshare-shrink_800/feedshare-shrink_800/0/1672079263164?e=1776297600&v=beta&t=dHARZ0rHpvAKyD_p1R5XsYv5yHx5ejuYVa1Gr7zOi3o", "theme": "Leadership"}, {"text": "In case you missed it, this TOOLSET seeks fairness & bias in #healthcare #machinelearning & #AI models. Released yesterday, it's the result of incredible work by Christine Allen, Vikas Kumar, Carly Eckert, Ankur Teredesai, Muhammad Aurangzeb Ahmad, Juhua Hu, Arpit Patel.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:6726915055008522240/", "image": "https://media.licdn.com/dms/image/v2/C4D22AQFvVyYbaJQI2w/feedshare-shrink_480/feedshare-shrink_480/0/1603739875916?e=1776297600&v=beta&t=gr5aaRhdsdkSPXiU8DUFYQmjsreR3fNIhofBKZF7vSI", "theme": "AI Strategy"}, {"text": "#ThursdayThoughts: if I'm not developing and growing the people I work with, I feel like I'm pushing paper (or bits). Today I kick off a series of bootcamp events for my team.", "url": "https://www.linkedin.com/feed/update/urn:li:activity:6712389954451972096/", "image": "https://media.licdn.com/dms/image/v2/C5622AQGHbMWfbCYlOg/feedshare-shrink_800/feedshare-shrink_800/0/1600358414614?e=1776297600&v=beta&t=tgVEh6fImW3QRNo7KaZCgk3ZjhNjfPxyip-EKXc-DcE", "theme": "Leadership"}, {"text": "What was the last #dataviz that inspired you? This data-driven storytelling approach on #healthcare spending took my breath away", "url": "https://www.linkedin.com/feed/update/urn:li:activity:6698974109298229248/", "image": "", "theme": "Observations"}];
+
+let activeTheme = 'all';
+
+document.querySelectorAll('.filter-chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTheme = btn.dataset.theme;
+    render();
+  });
+});
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function render() {
+  const query = document.getElementById('search').value.toLowerCase().trim();
+  const grid = document.getElementById('grid');
+
+  const filtered = POSTS.filter(p => {
+    const themeMatch = activeTheme === 'all' || p.theme === activeTheme;
+    const textMatch = !query || p.text.toLowerCase().includes(query) || p.theme.toLowerCase().includes(query);
+    return themeMatch && textMatch;
+  });
+
+  document.getElementById('post-count').textContent = `${POSTS.length} posts`;
+  document.getElementById('results-meta').textContent =
+    filtered.length === POSTS.length
+      ? ''
+      : `Showing ${filtered.length} of ${POSTS.length} posts`;
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results">No posts match your search.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map((p, i) => `
+    <article class="card" style="animation-delay:${Math.min(i * 0.03, 0.4)}s">
+      ${p.image
+        ? `<img class="card-image" src="${escHtml(p.image)}" loading="lazy" onerror="this.parentElement.querySelector('.card-image-placeholder') && (this.style.display='none')" alt=""/>`
+        : `<div class="card-image-placeholder"></div>`
+      }
+      <div class="card-body">
+        <div class="card-theme">${escHtml(p.theme)}</div>
+        <p class="card-text">${escHtml(p.text)}</p>
+        ${p.url ? `<a class="card-link" href="${escHtml(p.url)}" target="_blank" rel="noreferrer">Read on LinkedIn →</a>` : ''}
+      </div>
+    </article>
+  `).join('');
+}
+
+render();
+</script>
+</body>
+</html>
