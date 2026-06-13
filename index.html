@@ -78,6 +78,26 @@
 
     .hero {
       padding: 5rem 0 3rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      display: block;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-image {
+        order: -1;
+      }
     }
 
     .hero h1 {
@@ -182,16 +202,21 @@
 
   <main class="wrap">
     <section class="hero" id="top" style="border-top: none;">
-      <h1>Work at the edge of systems, stories, and machines.</h1>
-      <p>
-        I build across enterprise AI, knowledge architecture, and physical computing.
-        This site is the canonical home for my work; projects, experiments, and notes
-        that connect strategy to things you can actually see, run, and touch.
-      </p>
-      <div class="hero-links">
-        <a class="button primary" href="#work">View work</a>
-        <a class="button" href="https://github.com/cpstroum" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="button" href="https://cpstroum.github.io/writing.html" target="_blank" rel="noreferrer">Field Notes</a>
+      <div>
+        <h1>Work at the edge of systems, stories, and machines.</h1>
+        <p>
+          I build across enterprise AI, knowledge architecture, and physical computing.
+          This site is the canonical home for my work; projects, experiments, and notes
+          that connect strategy to things you can actually see, run, and touch.
+        </p>
+        <div class="hero-links">
+          <a class="button primary" href="#work">View work</a>
+          <a class="button" href="https://github.com/cpstroum" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="button" href="https://cpstroum.github.io/writing.html" target="_blank" rel="noreferrer">Field Notes</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="featured_images/flight-tracker-hero.jpg" alt="Holding a TFT Gizmo display showing a live flight radar, built on the flight-tracker-bluefruit project"/>
       </div>
     </section>
 
@@ -276,6 +301,15 @@
           <p style="margin-top:0.75rem"><a href="writing.html">Browse all →</a></p>
         </article>
         
+        <article class="card" style="grid-column: 1 / -1; min-height: auto;">
+          <h3>Corporate Pulp</h3>
+          <p>
+            A growing shelf of pulp-novel covers for the small absurdities of enterprise life — AI strategy,
+            healthcare ops, and hardware experiments, illustrated as paperbacks "by Corinne Stroum."
+          </p>
+          <a href="writing.html"><img src="featured_images/bookshelf.png" alt="Shelf of illustrated pulp-novel covers titled Corporate Pulp by Corinne Stroum" style="width:100%; height:auto; border:1px solid var(--line); margin-top:0.75rem;"/></a>
+        </article>
+
         <article class="card placeholder">
           <h3>Talks and artifacts</h3>
           <p>
