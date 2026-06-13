@@ -395,6 +395,16 @@ const POSTS = [
 
 let activeTheme = 'all';
 
+const themeParam = new URLSearchParams(window.location.search).get('theme');
+if (themeParam) {
+  const match = [...document.querySelectorAll('.filter-chip')].find(b => b.dataset.theme === themeParam);
+  if (match) {
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+    match.classList.add('active');
+    activeTheme = themeParam;
+  }
+}
+
 document.querySelectorAll('.filter-chip').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
