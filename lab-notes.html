@@ -380,6 +380,7 @@
               Spent the first morning teleoperating the SO-101 through the task, over and over — 50 demonstration
               episodes logged as joint positions, camera frames, and next-action targets. This is the raw data
               everything downstream depends on.
+              <a href="https://huggingface.co/datasets/cpstroum/so101-brachiomimus-50ep" target="_blank" rel="noreferrer">View the dataset →</a>
             </p>
             <div class="photos">
               <figure>
@@ -404,6 +405,7 @@
             <p>
               First training pass on the 50 episodes. On the real arm the policy moved, but it drifted and
               stuttered off-task almost immediately — no run tracking yet, so no real signal on why.
+              <a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement" target="_blank" rel="noreferrer">View this policy (v1) →</a>
             </p>
           </div>
           <div class="video-embed portrait">
@@ -419,6 +421,7 @@
               Reran training with every step logged to Weights &amp; Biases — loss, gradient norms, checkpoints —
               30,000 steps, roughly 17 passes over the data. This time the policy held the task together.
               (The <a href="#infographic">infographic below</a> breaks down what "30,000 steps" actually means.)
+              <a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement-v2" target="_blank" rel="noreferrer">View this policy (v2) →</a>
             </p>
           </div>
           <div class="video-embed portrait">
@@ -442,20 +445,24 @@
     <section id="resources">
       <h2>Resources</h2>
       <p class="section-intro">
-        The repos and tracker behind the experiments — dataset, trained policy, and training runs.
+        The dataset, both policy checkpoints, and the training run behind them.
       </p>
       <ul class="resource-list">
         <li>
-          <h3><a href="#">Dataset repo →</a></h3>
-          <p>Demonstration episodes collected via teleop, in LeRobot format. <!-- TODO: replace with actual dataset repo URL --></p>
+          <h3><a href="https://huggingface.co/datasets/cpstroum/so101-brachiomimus-50ep" target="_blank" rel="noreferrer">Dataset →</a></h3>
+          <p>50 teleop demonstration episodes — joints, camera frames, and next-action targets.</p>
         </li>
         <li>
-          <h3><a href="#">Policy repo →</a></h3>
-          <p>Trained policy weights, configs, and inference code. <!-- TODO: replace with actual policy repo URL --></p>
+          <h3><a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement" target="_blank" rel="noreferrer">Policy v1 →</a></h3>
+          <p>The first trained checkpoint — the one that glitched off-task on the real arm.</p>
         </li>
         <li>
-          <h3><a href="#">W&amp;B tracker →</a></h3>
-          <p>Training runs, loss curves, and eval metrics from Weights &amp; Biases. <!-- TODO: replace with actual W&B project URL --></p>
+          <h3><a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement-v2" target="_blank" rel="noreferrer">Policy v2 →</a></h3>
+          <p>Retrained with W&amp;B tracking, 30k steps — the checkpoint that held the task together.</p>
+        </li>
+        <li>
+          <h3><a href="https://wandb.ai/cpstroum-personal/so101-brachiomimus/runs/oe3u6paz" target="_blank" rel="noreferrer">W&amp;B run →</a></h3>
+          <p>Loss curves, gradient norms, and checkpoints from the v2 training run. May require access if the project is private.</p>
         </li>
       </ul>
     </section>
