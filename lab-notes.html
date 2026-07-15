@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab Notes: SO-101 — Corinne Stroum</title>
+  <style>
+    :root {
+      --bg: #f7f4ec;
+      --paper: #fffdf8;
+      --ink: #1c1c1c;
+      --muted: #5f5a52;
+      --line: #d8d0c2;
+      --accent: #1f3c88;
+      --max: 1100px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .wrap {
+      width: min(92%, var(--max));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.92);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+
+    nav .name {
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.25rem;
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    .hero {
+      padding: 3.5rem 0 2.5rem;
+    }
+
+    .hero .kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      margin: 0 0 1rem;
+      max-width: 22ch;
+    }
+
+    .hero p {
+      max-width: 52rem;
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    section {
+      padding: 2rem 0 3.5rem;
+      border-top: 1px solid var(--line);
+    }
+
+    section h2 {
+      font-size: 1.9rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 48rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 1.25rem;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .meta {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .placeholder {
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,0.45);
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 180px;
+      font-size: 0.95rem;
+    }
+
+    .placeholder .tag {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .media-grid img,
+    .media-grid video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--line);
+    }
+
+    .infographic-frame {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 1.25rem;
+    }
+
+    .infographic-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .resource-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .resource-list li {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 1.25rem;
+    }
+
+    .resource-list h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.1rem;
+    }
+
+    .resource-list p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .roadmap {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .roadmap-item {
+      display: grid;
+      grid-template-columns: 8rem 1fr;
+      gap: 1rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 1.1rem 1.25rem;
+    }
+
+    .roadmap-item .status {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    @media (max-width: 640px) {
+      .roadmap-item {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="name"><a href="index.html" style="color:inherit">Corinne Stroum</a></div>
+        <ul>
+          <li><a href="index.html#work">Work</a></li>
+          <li><a href="writing.html">Field Notes</a></li>
+          <li><a href="lab-notes.html">Lab Notes</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" style="border-top: none;">
+      <div class="kicker">Lab Notes</div>
+      <h1>SO-101: teaching a cheap robot arm to do useful things</h1>
+      <p>
+        Field Notes are the writing; this is the workbench. Lab Notes tracks the experiments I'm running on my
+        SO-101 arm — imitation learning from demonstrations, the datasets and policies that come out of it, and
+        the sim and real-world runs in between. Progress, dead ends, and the infographic that ties it together,
+        all in one place.
+      </p>
+    </section>
+
+    <section id="progress">
+      <h2>Progress</h2>
+      <p class="section-intro">
+        Photos and video from training and eval runs, roughly in order. Drop new files into
+        <code>featured_images/</code> and swap them in below as runs complete.
+      </p>
+
+      <div class="media-grid">
+        <div class="placeholder">
+          <div class="tag">Photo</div>
+          Arm setup / workspace shot
+        </div>
+        <div class="placeholder">
+          <div class="tag">Photo</div>
+          Teleop demonstration capture
+        </div>
+        <div class="placeholder">
+          <div class="tag">Video</div>
+          Policy rollout — first successful grasp
+        </div>
+        <div class="placeholder">
+          <div class="tag">Video</div>
+          Policy rollout — latest checkpoint
+        </div>
+      </div>
+    </section>
+
+    <section id="infographic">
+      <h2>The infographic</h2>
+      <p class="section-intro">
+        A one-page visual summary of the pipeline: data collection → training → evaluation.
+      </p>
+      <div class="infographic-frame">
+        <div class="placeholder" style="min-height: 320px;">
+          <div class="tag">Infographic</div>
+          Drop the SO-101 pipeline infographic here (e.g. featured_images/so101-infographic.png)
+        </div>
+      </div>
+    </section>
+
+    <section id="resources">
+      <h2>Resources</h2>
+      <p class="section-intro">
+        The repos and tracker behind the experiments — dataset, trained policy, and training runs.
+      </p>
+      <ul class="resource-list">
+        <li>
+          <h3><a href="#">Dataset repo →</a></h3>
+          <p>Demonstration episodes collected via teleop, in LeRobot format. <!-- TODO: replace with actual dataset repo URL --></p>
+        </li>
+        <li>
+          <h3><a href="#">Policy repo →</a></h3>
+          <p>Trained policy weights, configs, and inference code. <!-- TODO: replace with actual policy repo URL --></p>
+        </li>
+        <li>
+          <h3><a href="#">W&amp;B tracker →</a></h3>
+          <p>Training runs, loss curves, and eval metrics from Weights &amp; Biases. <!-- TODO: replace with actual W&B project URL --></p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="whats-next">
+      <h2>What's next</h2>
+      <p class="section-intro">
+        Open threads on the bench right now.
+      </p>
+      <div class="roadmap">
+        <div class="roadmap-item">
+          <div class="status">In progress</div>
+          <div>
+            <strong>Sim-to-real for episode efficiency.</strong> Using simulation to see how far the required
+            demonstration count can drop before real-world performance degrades — comparing policies trained
+            on fewer real episodes plus sim augmentation against the real-only baseline.
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status">Planned</div>
+          <div>
+            <strong>Migrate to Gr00t N1.7.</strong> Swap the current policy backbone for NVIDIA's Gr00t N1.7
+            foundation model and compare sample efficiency and rollout quality against the from-scratch policy.
+          </div>
+        </div>
+        <div class="roadmap-item">
+          <div class="status">Exploring</div>
+          <div>
+            <strong>Broader task set.</strong> Beyond the current pick-and-place task, testing whether the same
+            data pipeline generalizes to new object types and manipulation tasks without a full re-collection.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      Corinne Stroum · Seattle, WA · Built on GitHub Pages
+    </div>
+  </footer>
+</body>
+</html>
