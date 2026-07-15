@@ -187,6 +187,84 @@
       margin-top: 0.5rem;
     }
 
+    .story {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .beat {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.75rem;
+      align-items: start;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 1.5rem;
+    }
+
+    .beat .kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+
+    .beat h3 {
+      font-size: 1.35rem;
+      margin: 0 0 0.6rem;
+    }
+
+    .beat p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .beat .photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .beat .photos img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--line);
+    }
+
+    .beat .photos figcaption,
+    .beat p + figcaption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    .video-embed {
+      border: 1px solid var(--line);
+      background: #000;
+    }
+
+    .video-embed iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+      border: 0;
+    }
+
+    .video-embed.portrait iframe {
+      aspect-ratio: 9 / 16;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 700px) {
+      .beat {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .infographic-frame {
       border: 1px solid var(--line);
       background: var(--paper);
@@ -290,26 +368,63 @@
     <section id="progress">
       <h2>Progress</h2>
       <p class="section-intro">
-        Photos and video from training and eval runs, roughly in order. Drop new files into
-        <code>featured_images/</code> and swap them in below as runs complete.
+        The journey so far, in order — recording, a failed first attempt, and the retrain that worked.
       </p>
 
-      <div class="media-grid">
-        <figure>
-          <img src="featured_images/so101-workspace.jpg" alt="Home workbench with the SO-101 follower arm on a tape-marked mat, a recording laptop, and maker gear on the shelf above" />
-          <figcaption>The bench — SO-101 follower arm, tape-marked workspace, and the laptop I record episodes from.</figcaption>
-        </figure>
-        <figure>
-          <img src="featured_images/so101-training-rerun.jpg" alt="Laptop showing a terminal encoding episodes next to the Rerun viewer with joint/action plots and the front camera feed" />
-          <figcaption>Recording episodes — joint and action streams alongside the front camera, live in the Rerun viewer.</figcaption>
-        </figure>
-        <figure>
-          <div class="placeholder" style="min-height: 200px;">
-            <div class="tag">Video</div>
-            Policy rollout clip (coming — see note below)
+      <div class="story">
+        <article class="beat">
+          <div>
+            <div class="kicker">Step 1 · Morning one</div>
+            <h3>Recording 50 episodes</h3>
+            <p>
+              Spent the first morning teleoperating the SO-101 through the task, over and over — 50 demonstration
+              episodes logged as joint positions, camera frames, and next-action targets. This is the raw data
+              everything downstream depends on.
+            </p>
+            <div class="photos">
+              <figure>
+                <img src="featured_images/so101-workspace.jpg" alt="Home workbench with the SO-101 follower arm on a tape-marked mat, a recording laptop, and maker gear on the shelf above" />
+                <figcaption>The bench — arm, tape-marked workspace, recording laptop.</figcaption>
+              </figure>
+              <figure>
+                <img src="featured_images/so101-training-rerun.jpg" alt="Laptop showing a terminal encoding episodes next to the Rerun viewer with joint/action plots and the front camera feed" />
+                <figcaption>Episode 10 of 50, joint/action streams live in Rerun.</figcaption>
+              </figure>
+            </div>
           </div>
-          <figcaption>A policy rollout on the real arm. Uploading shortly.</figcaption>
-        </figure>
+          <div class="video-embed">
+            <iframe src="https://www.youtube.com/embed/sjnnFQAO8gw" title="Recording SO-101 demonstration episodes" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
+
+        <article class="beat">
+          <div>
+            <div class="kicker">Step 2 · First attempt</div>
+            <h3>Trained a policy — it glitched</h3>
+            <p>
+              First training pass on the 50 episodes. On the real arm the policy moved, but it drifted and
+              stuttered off-task almost immediately — no run tracking yet, so no real signal on why.
+            </p>
+          </div>
+          <div class="video-embed portrait">
+            <iframe src="https://www.youtube.com/embed/U37baniM0o0" title="First SO-101 policy rollout, glitching off-task" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
+
+        <article class="beat">
+          <div>
+            <div class="kicker">Step 3 · Retrain, with tracking</div>
+            <h3>Logged the run to W&amp;B — it worked</h3>
+            <p>
+              Reran training with every step logged to Weights &amp; Biases — loss, gradient norms, checkpoints —
+              30,000 steps, roughly 17 passes over the data. This time the policy held the task together.
+              (The <a href="#infographic">infographic below</a> breaks down what "30,000 steps" actually means.)
+            </p>
+          </div>
+          <div class="video-embed portrait">
+            <iframe src="https://www.youtube.com/embed/iyRoyD8ZCpg" title="SO-101 policy rollout after retraining with W&B tracking" allowfullscreen loading="lazy"></iframe>
+          </div>
+        </article>
       </div>
     </section>
 
