@@ -77,16 +77,18 @@
     }
 
     .hero {
-      padding: 5rem 0 3rem;
+      padding: 2.5rem 0 2rem;
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 2.5rem;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 2rem;
       align-items: center;
     }
 
     .hero-image img {
       width: 100%;
       height: auto;
+      max-height: 300px;
+      object-fit: cover;
       border: 1px solid var(--line);
       display: block;
     }
@@ -101,23 +103,49 @@
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 5rem);
-      line-height: 1.05;
-      margin: 0 0 1rem;
-      max-width: 11ch;
+      font-size: clamp(1.9rem, 4vw, 3.1rem);
+      line-height: 1.1;
+      margin: 0 0 0.85rem;
+      max-width: 14ch;
     }
 
     .hero p {
       max-width: 52rem;
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--muted);
-      margin: 0 0 1.5rem;
+      margin: 0 0 1.25rem;
     }
 
     .hero-links {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
+    }
+
+    .feature {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 1.5rem 1.75rem;
+    }
+
+    .feature .kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature h2 {
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      line-height: 1.2;
+      margin: 0 0 0.6rem;
+    }
+
+    .feature p {
+      color: var(--muted);
+      margin: 0 0 0.75rem;
+      max-width: 60ch;
     }
 
     .button {
@@ -193,8 +221,9 @@
       <nav>
         <div class="name">Corinne Stroum</div>
         <ul>
-          <li><a href="#work">Work</a></li>
+          <li><a href="#builds">Builds</a></li>
           <li><a href="#field-notes">Field Notes</a></li>
+          <li><a href="lab-notes.html">Lab Notes</a></li>
         </ul>
       </nav>
     </div>
@@ -210,9 +239,8 @@
           that connect strategy to things you can actually see, run, and touch.
         </p>
         <div class="hero-links">
-          <a class="button primary" href="#work">View work</a>
+          <a class="button primary" href="#builds">View builds</a>
           <a class="button" href="https://github.com/cpstroum" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="button" href="https://cpstroum.github.io/writing.html" target="_blank" rel="noreferrer">Field Notes</a>
         </div>
       </div>
       <div class="hero-image">
@@ -220,8 +248,21 @@
       </div>
     </section>
 
-    <section id="work">
-      <h2>Work</h2>
+    <section id="featured" style="border-top: none; padding-top: 0;">
+      <div class="feature">
+        <div class="kicker">Currently on the bench · Lab Notes</div>
+        <h2>Teaching a cheap robot arm to do useful things</h2>
+        <p>
+          These are my experiments on the SO-101, a small robot arm that learns a task by watching me
+          demonstrate it rather than by being programmed with explicit rules; the datasets, the trained
+          models, and the runs in simulation and on the real arm all live on the page below.
+        </p>
+        <a href="lab-notes.html">Browse Lab Notes →</a>
+      </div>
+    </section>
+
+    <section id="builds">
+      <h2>Builds</h2>
       <p class="section-intro">
         Selected projects — code, demos, and the thinking behind the builds.
       </p>
@@ -282,7 +323,7 @@
             A virtual creature that lives on a Unihiker — a small touchscreen Linux board you can hold in your hand.
             Nemma is a companion you can play with, somewhere between a pet and a simulation.
           </p>
-          <p><a href="https://youtube.com/shorts/nHk_PbUhS0o?feature=share" target="_blank" rel="noreferrer">Watch demo video</a></p>
+          <p><a href="https://youtube.com/shorts/nHk_PbUhS0o?si=_15LoXSzSo2UAEq4" target="_blank" rel="noreferrer">Watch demo video</a></p>
         </article>
       </div>
     </section>
@@ -301,13 +342,13 @@
           <p style="margin-top:0.75rem"><a href="writing.html">Browse all →</a></p>
         </article>
         
-        <article class="card" style="grid-column: 1 / -1; min-height: auto;">
+        <article class="card">
           <h3>Corporate Pulp</h3>
           <p>
             A growing shelf of pulp-novel covers for the small absurdities of enterprise life — AI strategy,
             healthcare ops, and hardware experiments, illustrated as paperbacks "by Corinne Stroum."
           </p>
-          <a href="writing.html?theme=Corporate%20Pulp"><img src="featured_images/bookshelf.png" alt="Shelf of illustrated pulp-novel covers titled Corporate Pulp by Corinne Stroum" style="max-width:360px; width:100%; height:auto; border:1px solid var(--line); margin-top:0.75rem;"/></a>
+          <a href="writing.html?theme=Corporate%20Pulp"><img src="featured_images/bookshelf.png" alt="Shelf of illustrated pulp-novel covers titled Corporate Pulp by Corinne Stroum" style="width:100%; height:auto; border:1px solid var(--line); margin-top:0.75rem;"/></a>
         </article>
 
         <article class="card placeholder">
@@ -323,6 +364,7 @@
         </article>
       </div>
     </section>
+
   </main>
 
   <footer>
