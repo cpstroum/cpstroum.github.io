@@ -370,21 +370,24 @@
       <div class="kicker">Lab Notes</div>
       <h1>SO-101: teaching a cheap robot arm to do useful things</h1>
       <p>
-        Field Notes are the writing, and this is the workbench; Lab Notes follows the experiments I am running
-        on my SO-101, a small and inexpensive robot arm that you build and program yourself. The approach is
-        called imitation learning: the arm learns a task by watching me demonstrate it over and over, rather
-        than by following rules I write out by hand. This page tracks the datasets and the policies that come
-        out of that process, where a policy is just the trained model that decides what the arm should do at
-        each moment. You will find the runs in simulation and on the real arm, the dead ends along the way,
-        and the infographic that ties the whole story together, all in one place.
+        I've been experimenting with an SO-101, an open-source robot arm that I built and program myself. There 
+        are two parts: the leader arm, which I call Brachius Rex, and the follower arm, which I call Brachiomimus. 
+        
+        These let me use an approach called imitation learning: the follower arm (Brachiomimus) can learn a 
+        task by watching me demonstrate it over and over via teleoperation (controlling Brachius Rex), rather
+        than by following rules I write out by hand. This page tracks my journey.
+        
+        I start with "episodes", or recordings of task demonstrations. Anyone can use these to train "policies", or
+        trained models that decide what the arm should do at each moment. Below, I shared runs in simulation and 
+        on the real arm, my lessons learned, and a quick infographic to ties the concepts together
       </p>
     </section>
 
     <section id="progress">
       <h2>Progress</h2>
       <p class="section-intro">
-        This is the journey so far, in order: recording the demonstrations, a first training attempt that
-        failed, and the retrain that finally worked.
+        This is my journey so far, in order: recording the episodes (task demos), my first training attempt that
+        failed, and the my v2 training that worked.
       </p>
 
       <div class="story">
@@ -393,21 +396,21 @@
             <div class="kicker">Step 1 · Morning one</div>
             <h3>Recording 50 episodes</h3>
             <p>
-              I spent the first morning teleoperating the SO-101, which means controlling the arm by hand in
-              real time while a computer records everything it does. I ran through the task over and over
-              until I had fifty episodes, where an episode is just one complete recording of the arm doing the
-              task from start to finish. Each episode logs the arm's joint positions, the camera images, and
+              I spent the first morning teleoperating the SO-101; I controlled the Leader arm (Brachius Rex) by hand
+              while computer recorded everything it does. I repeated my task (moving a yellow block to a blue landing zone)
+              until I had fifty episodes. Each episode was an episode is just one complete recording of the arm doing the
+              task from start to finish, with a reset in-between. Each episode logs the arm's joint positions, the camera images, and
               what action came next; this raw data is what every later step depends on.
               <a href="https://huggingface.co/datasets/cpstroum/so101-brachiomimus-50ep" target="_blank" rel="noreferrer">View the dataset →</a>
             </p>
             <div class="photos">
               <figure>
                 <img src="featured_images/so101-workspace.jpg" alt="Home workbench with the SO-101 follower arm on a tape-marked mat, a recording laptop, and maker gear on the shelf above" />
-                <figcaption>The bench: the arm, the tape-marked workspace, and the laptop I record episodes from.</figcaption>
+                <figcaption>This is my workbench: Brachiomimus (Follower arm), the tape-marked workspace, and the laptop I record episodes from.</figcaption>
               </figure>
               <figure>
                 <img src="featured_images/so101-training-rerun.jpg" alt="Laptop showing a terminal encoding episodes next to the Rerun viewer with joint/action plots and the front camera feed" />
-                <figcaption>Episode ten of fifty, with the joint and action data streaming live into Rerun, the tool I use to watch what the arm is doing while I record.</figcaption>
+                <figcaption>Episode ten of fifty, with the joint and action data streaming live into Rerun, the tool I use to watch what the arm is doing.</figcaption>
               </figure>
             </div>
           </div>
@@ -421,11 +424,10 @@
             <div class="kicker">Step 2 · First attempt</div>
             <h3>I trained a policy, and it glitched</h3>
             <p>
-              This was the first training pass on the fifty episodes, where training just means showing the
-              model all of that recorded data over and over so it can learn a policy of its own. On the real
-              arm the policy moved, but it drifted off course and stuttered almost immediately. I was not
-              tracking the run yet, meaning I had not logged any of the numbers that show how training is
-              going, so I had no real signal on why it was failing.
+              I tried my first training pass on the fifty episodes over 5,000 steps (see <a href="#infographic">infographic</a>); this 
+              showed an Action Chunking Transformer (ACT) model the data I recorded so it can learn a policy 
+              of its own. It seemed to move in the right direction, but stuttered in place more than it fulfilled
+              the goal. I did some research to learn what might cause it: insufficient steps in the training job.
               <a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement" target="_blank" rel="noreferrer">View this policy (v1) →</a>
             </p>
           </div>
@@ -439,11 +441,10 @@
             <div class="kicker">Step 3 · Retrain, with tracking</div>
             <h3>I logged the run to Weights &amp; Biases, and it worked</h3>
             <p>
-              I reran training, but this time I logged everything to Weights &amp; Biases, or W&amp;B for
-              short. It is a tool that tracks a training run over time and charts numbers like loss, a measure
-              of how wrong the policy's predictions are, so you can actually see whether the model is
-              improving. I trained for 30,000 steps, roughly seventeen full passes over the whole dataset; the
-              <a href="#training-charts">training charts</a> and the <a href="#infographic">infographic</a>
+              I reran training, but this time I logged everything to Weights &amp; Biases (W&amp;B) so I could track
+              track a training run over time; it also charted metrics like loss, a measure of how wrong the policy's
+              predictions are, so I could verify the model was improving.  I trained for 30,000 steps, roughly 17 full 
+              passes over the whole dataset; the <a href="#training-charts">training charts</a> and the <a href="#infographic">infographic</a>
               below walk through that math in more detail. This time the policy held the task together on the
               real arm.
               <a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement-v2" target="_blank" rel="noreferrer">View this policy (v2) →</a>
@@ -459,13 +460,16 @@
     <section id="training-charts">
       <h2>Training charts</h2>
       <p class="section-intro">
-        This report shows three curves from the v2 training run, the one that worked. Loss is the overall
-        number for how wrong the policy's predictions are; it should trend downward as training goes on. L1
-        measures that same kind of error more directly, as the average distance between the arm position the
-        policy predicted and the real one. KLD, short for KL divergence, is a more technical measure of how
-        much the model's internal representation is drifting; it matters less for this story, but flat and
-        stable is a good sign, while wild swings would not be. There is no v1 run tracked, so this is not a
-        before-and-after comparison, just the curve that held together this time.
+        This report shows three curves from the v2 training run, the one that worked. 
+        - <b>Loss</b> is the overall metric for how wrong the policy's predictions are; 
+        it should trend downward as training goes on. 
+        - <b>L1</b> measures that same kind of error more directly, as the average distance 
+        between the arm position the policy predicted and the real one.
+        - <b>KLD</b> (KL divergence) is a more technical measure of how  much the model's internal 
+        representation is drifting; it matters less for this story, but flat and
+        stable is a good sign, while wild swings would not be. 
+        
+        I didn't track my v1 policy run , so this is not a before-and-after comparison. Just nice to visualize.
       </p>
       <div class="wandb-embed">
         <iframe src="https://wandb.ai/cpstroum-personal/so101-brachiomimus/reports/Block-Movement-v2-30k-steps---VmlldzoxNzQ5OTI4NA" title="W&B report: SO-101 block-movement v2, 30k steps" loading="lazy"></iframe>
@@ -475,8 +479,8 @@
     <section id="infographic">
       <h2>The infographic</h2>
       <p class="section-intro">
-        This is the training math in plain language: how fifty recorded episodes turn into 28,000 individual
-        frames of data, and what "30,000 steps" actually means, broken down into nudges and epochs, where an
+        This is the training behavior in plain language: how fifty recorded episodes turn into 28,000 individual
+        frames of data. It's also what "30,000 steps" means, broken down into nudges and epochs, where an
         epoch is one complete pass through the entire dataset.
       </p>
       <div class="infographic-frame">
@@ -488,7 +492,7 @@
       <h2>Resources</h2>
       <p class="section-intro">
         Here is the dataset, both saved versions of the trained policy, each one called a checkpoint, and the
-        training run behind them.
+        training run.
       </p>
       <ul class="resource-list">
         <li>
@@ -497,19 +501,15 @@
         </li>
         <li>
           <h3><a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement" target="_blank" rel="noreferrer">Policy v1 →</a></h3>
-          <p>The first trained checkpoint, meaning the first saved version of the policy; this is the one that glitched and drifted off task on the real arm.</p>
+          <p>The first trained policy over 5,000 steps; this is the one that glitched Brachiomimus.</p>
         </li>
         <li>
           <h3><a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement-v2" target="_blank" rel="noreferrer">Policy v2 →</a></h3>
-          <p>Retrained with W&amp;B tracking over 30,000 steps; this is the checkpoint that held the task together.</p>
+          <p>Retrained with W&amp;B tracking over 30,000 steps; this is the checkpoint that got closer to working!</p>
         </li>
         <li>
           <h3><a href="https://wandb.ai/cpstroum-personal/so101-brachiomimus/reports/Block-Movement-v2-30k-steps---VmlldzoxNzQ5OTI4NA" target="_blank" rel="noreferrer">W&amp;B report →</a></h3>
           <p>Loss, L1, and KLD from the v2 run; the same charts embedded above.</p>
-        </li>
-        <li>
-          <h3><a href="https://wandb.ai/cpstroum-personal/so101-brachiomimus/runs/oe3u6paz" target="_blank" rel="noreferrer">W&amp;B run →</a></h3>
-          <p>The raw dashboard for the v2 run; it may require access if the project is set to private.</p>
         </li>
       </ul>
     </section>
@@ -517,14 +517,14 @@
     <section id="whats-next">
       <h2>What's next</h2>
       <p class="section-intro">
-        These are the open threads on the bench right now.
+        I'm still at work on the bench!
       </p>
       <div class="roadmap">
         <div class="roadmap-item">
           <div class="status">In progress</div>
           <div>
             <strong>Sim-to-real for episode efficiency.</strong> Sim-to-real means training or testing a policy
-            in a simulated version of the world before trying it on the real arm. The idea here is to see how
+            in a <i>simulated</i> version of the world before trying it on the real arm. The idea here is to see how
             few real demonstration episodes I can get away with, by comparing policies trained on fewer real
             episodes plus simulated data against the current real-only baseline.
           </div>
@@ -533,18 +533,15 @@
           <div class="status">Planned</div>
           <div>
             <strong>Migrate to Gr00t N1.7.</strong> The plan is to swap the current policy, which was trained
-            entirely from scratch on my own data, for NVIDIA's Gr00t N1.7. It is a foundation model, meaning a
-            large model already pretrained on a huge amount of robot data that I can fine-tune on my own
-            smaller dataset. I want to compare how much data it needs, and how good its rollouts, meaning its
-            actual runs on the arm, look against the from-scratch policy.
+            entirely from scratch on my own data, for NVIDIA's Gr00t N1.7. I'll compare how much data it needs, 
+            and how good its performance ompares to my from-scratch policy.
           </div>
         </div>
         <div class="roadmap-item">
           <div class="status">Exploring</div>
           <div>
             <strong>Broader task set.</strong> Beyond the current pick-and-place task, I want to test whether
-            the same data pipeline, meaning the same process for recording, training, and evaluating,
-            generalizes to new objects and new kinds of manipulation without having to record an entirely new
+            the pipeline can generalize to new objects and manipulation without having to record an entirely new
             dataset from scratch.
           </div>
         </div>
