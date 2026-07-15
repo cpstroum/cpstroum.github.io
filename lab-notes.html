@@ -168,12 +168,23 @@
       gap: 1.25rem;
     }
 
+    .media-grid figure {
+      margin: 0;
+    }
+
     .media-grid img,
     .media-grid video {
       width: 100%;
       height: auto;
       display: block;
       border: 1px solid var(--line);
+      background: #000;
+    }
+
+    .media-grid figcaption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
     }
 
     .infographic-frame {
@@ -284,35 +295,32 @@
       </p>
 
       <div class="media-grid">
-        <div class="placeholder">
-          <div class="tag">Photo</div>
-          Arm setup / workspace shot
-        </div>
-        <div class="placeholder">
-          <div class="tag">Photo</div>
-          Teleop demonstration capture
-        </div>
-        <div class="placeholder">
-          <div class="tag">Video</div>
-          Policy rollout — first successful grasp
-        </div>
-        <div class="placeholder">
-          <div class="tag">Video</div>
-          Policy rollout — latest checkpoint
-        </div>
+        <figure>
+          <img src="featured_images/so101-workspace.jpg" alt="Home workbench with the SO-101 follower arm on a tape-marked mat, a recording laptop, and maker gear on the shelf above" />
+          <figcaption>The bench — SO-101 follower arm, tape-marked workspace, and the laptop I record episodes from.</figcaption>
+        </figure>
+        <figure>
+          <img src="featured_images/so101-training-rerun.jpg" alt="Laptop showing a terminal encoding episodes next to the Rerun viewer with joint/action plots and the front camera feed" />
+          <figcaption>Recording episodes — joint and action streams alongside the front camera, live in the Rerun viewer.</figcaption>
+        </figure>
+        <figure>
+          <div class="placeholder" style="min-height: 200px;">
+            <div class="tag">Video</div>
+            Policy rollout clip (coming — see note below)
+          </div>
+          <figcaption>A policy rollout on the real arm. Uploading shortly.</figcaption>
+        </figure>
       </div>
     </section>
 
     <section id="infographic">
       <h2>The infographic</h2>
       <p class="section-intro">
-        A one-page visual summary of the pipeline: data collection → training → evaluation.
+        The training math in plain language — how 50 recorded episodes become 28,000 frames, and what
+        "30,000 steps" actually means in nudges and epochs.
       </p>
       <div class="infographic-frame">
-        <div class="placeholder" style="min-height: 320px;">
-          <div class="tag">Infographic</div>
-          Drop the SO-101 pipeline infographic here (e.g. featured_images/so101-infographic.png)
-        </div>
+        <img src="featured_images/so101-infographic.png" alt="Infographic explaining the training math: 28,000 frames from 50 episodes, batch of 16 = one step, 1,750 steps = one epoch, 30,000 steps is about 17 epochs" />
       </div>
     </section>
 

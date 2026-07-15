@@ -152,21 +152,17 @@
     }
 
     .feature-media {
-      border: 1px dashed var(--line);
-      background: rgba(255,255,255,0.5);
-      min-height: 240px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-      padding: 1rem;
+      display: block;
+      border: 1px solid var(--line);
+      background: #000;
+      line-height: 0;
     }
 
     .feature-media img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      max-height: 320px;
+      object-fit: cover;
       display: block;
     }
 
@@ -295,9 +291,9 @@
             <a class="button" href="lab-notes.html#resources">Dataset · Policy · W&amp;B</a>
           </div>
         </div>
-        <div class="feature-media">
-          Infographic / lab photo goes here
-        </div>
+        <a class="feature-media" href="lab-notes.html" aria-label="Open Lab Notes">
+          <img src="featured_images/so101-workspace.jpg" alt="Home workbench with the SO-101 follower arm on a tape-marked mat and a recording laptop" />
+        </a>
       </div>
     </section>
 
