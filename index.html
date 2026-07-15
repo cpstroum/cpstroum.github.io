@@ -120,6 +120,64 @@
       gap: 0.75rem;
     }
 
+    .feature {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 2rem;
+      align-items: center;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 1.75rem;
+    }
+
+    .feature .kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .feature h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.15;
+      margin: 0 0 0.85rem;
+    }
+
+    .feature p {
+      color: var(--muted);
+      margin: 0 0 1.25rem;
+    }
+
+    .feature-media {
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,0.5);
+      min-height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 1rem;
+    }
+
+    .feature-media img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    @media (max-width: 760px) {
+      .feature {
+        grid-template-columns: 1fr;
+      }
+      .feature-media {
+        order: -1;
+        min-height: 180px;
+      }
+    }
+
     .button {
       display: inline-block;
       padding: 0.7rem 1rem;
@@ -213,12 +271,31 @@
         <div class="hero-links">
           <a class="button primary" href="#work">View work</a>
           <a class="button" href="https://github.com/cpstroum" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="button" href="https://cpstroum.github.io/writing.html" target="_blank" rel="noreferrer">Field Notes</a>
-          <a class="button" href="lab-notes.html">Lab Notes</a>
         </div>
       </div>
       <div class="hero-image">
         <img src="featured_images/flight-tracker-hero.jpg" alt="Holding a TFT Gizmo display showing a live flight radar, built on the flight-tracker-bluefruit project"/>
+      </div>
+    </section>
+
+    <section id="featured" style="border-top: none; padding-top: 0;">
+      <div class="feature">
+        <div>
+          <div class="kicker">Currently on the bench · Lab Notes</div>
+          <h2>Teaching a cheap robot arm to do useful things</h2>
+          <p>
+            My SO-101 experiments: imitation learning from demonstrations, the datasets and policies
+            that come out of it, and the sim-to-real work in between. Next up — using sim to cut the
+            episode count, then Gr00t N1.7.
+          </p>
+          <div class="hero-links">
+            <a class="button primary" href="lab-notes.html">Open Lab Notes</a>
+            <a class="button" href="lab-notes.html#resources">Dataset · Policy · W&amp;B</a>
+          </div>
+        </div>
+        <div class="feature-media">
+          Infographic / lab photo goes here
+        </div>
       </div>
     </section>
 
@@ -326,24 +403,6 @@
       </div>
     </section>
 
-    <section id="lab-notes">
-      <h2>Lab Notes</h2>
-      <p class="section-intro">
-        The workbench, not the writing: experiments running on my SO-101 robot arm — imitation learning,
-        datasets, policies, and sim-to-real work.
-      </p>
-
-      <div class="grid">
-        <article class="card">
-          <h3><a href="lab-notes.html">SO-101 experiments</a></h3>
-          <p>
-            Progress photos and video, the pipeline infographic, links to the dataset, policy, and W&amp;B
-            training tracker, and what's next — sim for episode efficiency, then Gr00t N1.7.
-          </p>
-          <p style="margin-top:0.75rem"><a href="lab-notes.html">Browse Lab Notes →</a></p>
-        </article>
-      </div>
-    </section>
   </main>
 
   <footer>
