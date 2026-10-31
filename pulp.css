@@ -1,0 +1,186 @@
+/* ─────────────────────────────────────────────────────────────
+   Pulp theme — vintage sci-fi paperback overrides.
+   Loaded after each page's inline <style>, so it re-skins colors
+   and type without touching layout. Palette sampled from the
+   Corporate Pulp covers.
+   ───────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap');
+
+:root {
+  --bg: #efe2c4;          /* aged newsprint */
+  --paper: #f8eed6;       /* fresh page */
+  --ink: #1a2238;         /* midnight navy-black */
+  --muted: #5b4a36;       /* sepia */
+  --line: #c9b48a;        /* foxed edge */
+  --accent: #b8321f;      /* pulp-cover red */
+  --gold: #e3a72f;        /* title-lettering mustard */
+  --teal: #1d4e63;        /* cover-sky teal */
+  --accent-light: #f3d9a4;
+  --tag-bg: #e7d6b0;
+
+  --display: 'Bebas Neue', 'Oswald', Impact, sans-serif;
+  --type: 'Special Elite', 'Courier New', monospace;
+  --serif: 'Libre Baskerville', Georgia, serif;
+}
+
+/* ── Paper & body type ── */
+body {
+  font-family: var(--serif);
+  font-size: 0.97rem;
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(26, 34, 56, 0.07) 1px, transparent 1.3px);
+  background-size: 6px 6px;           /* faint halftone */
+}
+
+a { color: var(--accent); }
+a:hover { text-decoration-color: var(--gold); text-decoration-thickness: 2px; }
+
+/* ── Masthead ── */
+header {
+  background: var(--ink) !important;
+  border-bottom: 5px solid var(--gold);
+  z-index: 100;
+}
+header a, nav ul a { color: var(--paper); }
+nav ul a {
+  font-family: var(--type);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+nav ul a:hover { color: var(--gold); text-decoration: none; }
+nav .name, .nav-name, nav .name a, .nav-name a {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--gold) !important;
+  line-height: 1;
+}
+
+/* ── Headlines ── */
+h1, h2, h3,
+.hero h1, .page-hero h1, section h2, .feature h2, .beat h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+}
+.hero h1, .page-hero h1 {
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 0.95;
+  text-shadow: 3px 3px 0 var(--gold);
+}
+section h2 {
+  font-size: 2.6rem;
+  line-height: 1;
+  display: inline-block;
+  border-bottom: 5px solid var(--accent);
+  padding-bottom: 0.1rem;
+}
+.card h3, .resource-list h3, .beat h3 { font-size: 1.6rem; line-height: 1.05; }
+.feature h2 { font-size: clamp(1.9rem, 3.4vw, 2.5rem); line-height: 1; }
+.card h3 a, .resource-list h3 a { color: var(--ink); }
+.card h3 a:hover { color: var(--accent); }
+
+/* ── Typewriter labels ── */
+.kicker, .meta, .tag, .status, .filter-label, .post-count, .results-meta,
+.card-theme, .card-series, figcaption, footer {
+  font-family: var(--type);
+  font-style: normal;
+}
+.feature .kicker, .beat .kicker, .hero .kicker {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--ink);
+  padding: 0.15rem 0.55rem;
+  letter-spacing: 0.08em;
+}
+.meta { color: var(--teal); }
+.card-theme { color: var(--accent); }
+.card-series { color: var(--teal); border-color: var(--teal); }
+.roadmap-item .status { color: var(--accent); }
+
+/* ── Print-offset panels ── */
+.card, .feature, .beat, .resource-list li, .roadmap-item, .infographic-frame {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.card { transition: transform 0.12s, box-shadow 0.12s; }
+.card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--accent);
+}
+.feature { border-left: 10px solid var(--accent); }
+.placeholder {
+  background: var(--paper);
+  border-style: dashed;
+}
+
+/* ── Images get a thin ink frame ── */
+.hero-image img, .media-grid img, .beat .photos img, .video-embed, .wandb-embed {
+  border: 2px solid var(--ink);
+}
+.hero-image img { box-shadow: 6px 6px 0 var(--teal); }
+
+/* ── Buttons ── */
+.button {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+  padding: 0.45rem 1.1rem 0.3rem;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.button.primary { background: var(--accent); color: var(--paper); }
+.button:hover { text-decoration: none; transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); }
+
+/* ── Section rules ── */
+section { border-top: 2px solid var(--ink); }
+.page-hero { border-bottom: 2px solid var(--ink); }
+
+/* ── Field Notes filters ── */
+.filter-bar {
+  background: rgba(239, 226, 196, 0.97);
+  border-bottom: 2px solid var(--ink);
+}
+.filter-chip {
+  font-family: var(--type);
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  color: var(--ink);
+  background: var(--paper);
+}
+.filter-chip:hover { border-color: var(--accent); color: var(--accent); }
+.filter-chip.active { background: var(--accent); border-color: var(--ink); color: var(--paper); }
+.search-wrap input {
+  font-family: var(--type);
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+}
+.search-wrap input:focus { border-color: var(--accent); }
+.card-image { border-bottom: 2px solid var(--ink); }
+.card-image-placeholder { height: 6px; background: var(--gold); }
+
+/* ── Footer ── */
+footer {
+  background: var(--ink);
+  color: var(--line);
+  border-top: 5px solid var(--gold);
+}
+footer a { color: var(--gold); }
+
+/* ── Fit-and-finish ── */
+.hero h1 { max-width: 18ch; }
+.feature .kicker, .beat .kicker, .hero .kicker { display: block; width: fit-content; }
+.feature h2 { display: block; border-bottom: none; padding-bottom: 0; }
+.filter-bar { top: 63px; }
+nav .name, .nav-name { white-space: nowrap; }
+@media (max-width: 520px) {
+  nav .name, .nav-name { font-size: 1.35rem; }
+  nav ul { gap: 0.7rem; }
+  nav ul a { font-size: 0.78rem; }
+  .hero h1 { max-width: none; }
+}
