@@ -106,7 +106,7 @@ h3, .card h3, .resource-list h3, .beat h3 {
 }
 .meta { color: var(--teal); }
 .card-theme { color: var(--accent); }
-.card-series { color: var(--teal); border-color: var(--teal); }
+.card-series { color: var(--teal); border-color: var(--teal); align-self: flex-start; }
 .roadmap-item .status { color: var(--accent); }
 
 /* ── Print-offset panels ── */
