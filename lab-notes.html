@@ -376,7 +376,7 @@
         
         These let me use an approach called imitation learning: the follower arm (Brachiomimus) can learn a 
         task by watching me demonstrate it over and over via teleoperation (controlling Brachius Rex), rather
-        than by following rules I write out by hand. This page tracks my journey.
+        than by following rules I write out by hand. This page is my lab notebook.
         
         I start with "episodes", or recordings of task demonstrations. Anyone can use these to train "policies", or
         trained models that decide what the arm should do at each moment. Below, I shared runs in simulation and 
@@ -387,7 +387,7 @@
     <section id="progress">
       <h2>Progress</h2>
       <p class="section-intro">
-        This is my journey so far, in order: recording the episodes (task demos), my first training attempt that
+        Here's what I've done so far, in order: recording the episodes (task demos), my first training attempt that
         failed, and the v2 training that worked.
       </p>
 
@@ -401,7 +401,7 @@
               while my laptop recorded everything it did. I repeated my task (moving a yellow block to a blue landing zone)
               until I had fifty episodes. Each episode is one complete recording of the arm doing the
               task from start to finish, with a reset in-between. Each episode logs the arm's joint positions, the camera images, and
-              what action came next; this raw data is what every later step depends on.
+              what action came next; everything after this is trained on that data.
               <a href="https://huggingface.co/datasets/cpstroum/so101-brachiomimus-50ep" target="_blank" rel="noreferrer">View the dataset →</a>
             </p>
             <div class="photos">
