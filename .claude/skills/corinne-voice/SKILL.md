@@ -7,6 +7,10 @@ description: Write or edit in Corinne Stroum's voice. Use for any copy on this s
 
 Corinne is Head of Emerging Technologies at SCAN Health Plan, a biomedical engineer, and a hardware hacker. She writes like she talks in a hallway: first person, specific, a little self-deprecating, and willing to admit what broke. The source material is her LinkedIn posts in `writing.html` (the `POSTS` array). Read a few long ones before writing anything substantial. Posts 0, 5, 7, 10, 12, 15 and 18 (by array index) are the best examples.
 
+## Rule zero: borrow, don't invent
+
+Her personality comes through in what happened, not in clever phrasing. When writing about something she has posted about, lift her actual sentence from `writing.html` and trim it. Only write new sentences when nothing of hers exists, and make those plain and descriptive. Short site copy (cards, intros, captions) should be flatter than her posts: say what the thing is, and stop. A plain sentence that's a little boring beats a clever one she'd never say.
+
 ## The shape of a Corinne piece
 
 1. **Open with a concrete moment, not a thesis.** A thing that happened, ideally slightly embarrassing or funny.
@@ -44,11 +48,25 @@ Short pieces (a build card, a one-paragraph blurb) compress this to: what it is,
 
 - **Rhythmic triples of abstractions.** "systems, stories, and machines"; "see, run, and touch"; "recovery, adaptation, and hardware that talks back." A list of three *concrete facts* is fine ("light, sound, and touch" for what a sensor reads). A list of three *vibes* is not. When you catch a triple, ask whether you'd say it out loud; if not, keep the one that's true and cut the rest.
 - **Staccato triads.** "Faster drafting. Better summarization. Lower handle time." Rewrite as one sentence or a real list.
-- **Consultant nouns.** connective tissue, at the intersection of, canonical home, thinking in public, the spaces between, embodied interface design, operational reality, ecosystem, landscape, journey (as a metaphor), unlock, leverage, robust, seamless.
+- **Consultant nouns.** connective tissue, at the intersection of, thinking in public, the spaces between, embodied interface design, operational reality, ecosystem, landscape, journey (as a metaphor), unlock, leverage, robust, seamless.
 - **Poetic closers.** "Simple premise, surprisingly alive in practice." "makes the invisible suddenly visible." "joyful engineering nonsense." If a sentence exists to sound nice rather than to say something, cut it.
 - **"It's not X, it's Y" as a default rhythm.** She uses it occasionally; AI uses it constantly. Once per piece, max.
 - **Generic setup.** "In today's fast-paced world," "As AI continues to evolve." Start with a moment instead.
 - **Abstract claims with no example.** Every claim should have a person, a place, a number, or a part number nearby.
+
+## Claude's own tics (the second rewrite still had these)
+
+When "fixing" AI copy, Claude tends to swap one set of tics for another. These came up on the first rewrite of this site and Corinne caught them:
+
+- **Wise-sounding closers.** "Most of them taught me something I didn't plan to learn." Any closing line that's a small life lesson goes.
+- **Wry one-liner tags.** "It's exactly as subtle as it sounds." "failures included." A cute afterthought tacked onto a plain sentence. Cut the tag.
+- **Setup/punchline headlines.** "I run X. After hours, I'm usually soldering something." The by-day/by-night pattern is a template, not her.
+- **Clever reversals of her own metaphors.** She wrote "A timeline is a public junk drawer." Claude added "this is the shelf." Don't extend her metaphors; quote them or leave them alone.
+- **Manufactured enthusiasm.** "I love a good stage or panel." Don't assert her feelings in copy unless she wrote them.
+- **"Actually."** "making AI actually work," "things you can actually see." Delete it.
+- **Inventing a reason for her.** "absurd enough to deserve pulp covers, so I gave some of my posts one." If she didn't give the reason, describe the thing instead.
+
+Test: if a sentence would get a knowing nod in a TED talk or a LinkedIn carousel, it's a tic.
 
 ## Facts to draw on
 
@@ -63,12 +81,14 @@ Use these instead of inventing color. Don't add personal details beyond what's h
 
 ## Before / after
 
-| Before (AI) | After (Corinne) |
-|---|---|
-| Work at the edge of systems, stories, and machines. | I run Emerging Technologies at SCAN. After hours, I'm usually soldering something. |
-| An aircast boot reimagined as an exoskeleton. Embodied interface design at the intersection of recovery, adaptation, and hardware that talks back. | After foot surgery, my boot weighed me down and I needed to feel like I owned it. My daughter and I brainstormed and turned it into a light-up exoskeleton. |
-| Live overhead flight data on a handheld display, a small machine that makes the invisible infrastructure above you suddenly visible. | My daughters asked, "Where is that plane going?" and kicked off my Hot Hack Summer. |
-| Writing, observations, and thinking in public; especially the connective tissue between technical systems, design, governance, and organizational reality. | Mostly AI and healthcare, usually explained through something my kids did that week. |
+| Original AI copy | Claude's first fix (still wrong) | Plain / hers |
+|---|---|---|
+| Work at the edge of systems, stories, and machines. | I run Emerging Technologies at SCAN. After hours, I'm usually soldering something. | I joke that my hobbies are preparing me to settle Mars. *(her line, post 14)* |
+| Selected projects, code, demos, and the thinking behind the builds. | Each one links to the code and a demo video. Most of them taught me something I didn't plan to learn. | Code and demo videos for my hardware projects. |
+| An aircast boot reimagined as an exoskeleton. Embodied interface design at the intersection of recovery, adaptation, and hardware that talks back. | (kept) | After foot surgery, my boot weighed me down and I needed to feel like I owned it. My daughter and I brainstormed and turned it into a light-up exoskeleton. *(from her post 37)* |
+| Live overhead flight data on a handheld display, a small machine that makes the invisible infrastructure above you suddenly visible. | (kept) | My daughters asked, "Where is that plane going?" and kicked off my Hot Hack Summer. *(her line, post 52)* |
+| Writing, observations, and thinking in public; especially the connective tissue between... | Mostly AI and healthcare, usually explained through something my kids did that week. | Posts on AI, healthcare, leadership, and my builds. |
+| A growing shelf of pulp-novel covers for the small absurdities of enterprise life... | Enterprise life is absurd enough to deserve pulp paperback covers, so I gave some of my posts one. | Some of my posts, illustrated as pulp-novel covers. |
 
 ## Checklist before you hand it back
 
@@ -77,4 +97,6 @@ Use these instead of inventing color. Don't add personal details beyond what's h
 3. Is there at least one specific person, place, tool, or number?
 4. Would Corinne say the first sentence out loud to a colleague?
 5. Did anything get prettier without getting truer? Undo it.
+5a. Read only the last sentence of each paragraph or card. If it's a quip, a lesson, or a tag, delete it and see if anything is lost.
+5b. Is there a sentence of hers in `writing.html` you could have used instead?
 6. Keep it short. She's direct; a build card is two or three sentences.
