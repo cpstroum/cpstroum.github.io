@@ -371,16 +371,17 @@
       <div class="kicker">Lab Notes</div>
       <h1>SO-101: teaching a cheap robot arm to do useful things</h1>
       <p>
-        I've been experimenting with an SO-101, an open-source robot arm that I built and program myself. There 
-        are two parts: the leader arm, which I call Brachius Rex, and the follower arm, which I call Brachiomimus. 
+        Zach and I built an SO-101, an open-source robot arm, and I've been learning to program it. There
+        are two parts: the leader arm, which I call Brachius Rex, and the follower arm, which I call Brachiomimus.
         
         These let me use an approach called imitation learning: the follower arm (Brachiomimus) can learn a 
         task by watching me demonstrate it over and over via teleoperation (controlling Brachius Rex), rather
-        than by following rules I write out by hand. This page is my lab notebook.
+        than by following rules I write out by hand. I learn better by writing into a lab notebook, but I also
+        think we need more people sharing the messy middle instead of polished demos. This page is my notebook.
         
         I start with "episodes", or recordings of task demonstrations. Anyone can use these to train "policies", or
-        trained models that decide what the arm should do at each moment. Below, I shared runs in simulation and 
-        on the real arm, my lessons learned, and a quick infographic to tie the concepts together.
+        models that decide what the arm should do at each moment. Below are my dataset, both training runs, what
+        went wrong, and an infographic that explains the training math.
       </p>
     </section>
 
@@ -397,11 +398,10 @@
             <div class="kicker">Step 1 · Morning one</div>
             <h3>Recording 50 episodes</h3>
             <p>
-              I spent the first morning teleoperating the SO-101; I controlled the Leader arm (Brachius Rex) by hand
-              while my laptop recorded everything it did. I repeated my task (moving a yellow block to a blue landing zone)
-              until I had fifty episodes. Each episode is one complete recording of the arm doing the
-              task from start to finish, with a reset in-between. Each episode logs the arm's joint positions, the camera images, and
-              what action came next; everything after this is trained on that data.
+              I spent a morning teleoperating Brachius Rex, the leader arm. I had it move a yellow block to a blue
+              target fifty times while my laptop recorded every joint movement, camera frame, and action. Each
+              episode is one complete run of the task from start to finish, with a reset in between. Those 15
+              minutes of demonstrations became the training data for Brachiomimus.
               <a href="https://huggingface.co/datasets/cpstroum/so101-brachiomimus-50ep" target="_blank" rel="noreferrer">View the dataset →</a>
             </p>
             <div class="photos">
@@ -425,10 +425,12 @@
             <div class="kicker">Step 2 · First attempt</div>
             <h3>I trained a policy, and it glitched</h3>
             <p>
-              I tried my first training pass on the fifty episodes over 5,000 steps (see <a href="#infographic">infographic</a>); this 
-              showed an Action Chunking Transformer (ACT) model the data I recorded so it can learn a policy 
-              of its own. It seemed to move in the right direction, but stuttered in place more than it fulfilled
-              the goal. I did some research to learn what might cause it: insufficient steps in the training job.
+              I trained my first Action Chunking Transformer (ACT) policy on the fifty episodes for 5,000 steps
+              (see the <a href="#infographic">infographic</a>) and eagerly set it up to run on its own. It failed;
+              the arm twitched in place. It looked like it was trying to move toward the block or the goal but
+              couldn't quite commit. My first assumption was the obvious one: 50 episodes? I didn't collect enough
+              data. I dug deep into the refresh rate of my recording and my eval, thinking my Surface laptop was
+              maxed out.
               <a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement" target="_blank" rel="noreferrer">View this policy (v1) →</a>
             </p>
           </div>
@@ -440,14 +442,13 @@
         <article class="beat">
           <div>
             <div class="kicker">Step 3 · Retrain, with tracking</div>
-            <h3>I logged the run to Weights &amp; Biases, and it worked</h3>
+            <h3>I trained longer, and it worked</h3>
             <p>
-              I reran training, but this time I logged everything to Weights &amp; Biases (W&amp;B) so I could
-              track a training run over time; it also charted metrics like loss, a measure of how wrong the policy's
-              predictions are, so I could verify the model was improving.  I trained for 30,000 steps, roughly 17 full 
-              passes over the whole dataset; the <a href="#training-charts">training charts</a> and the <a href="#infographic">infographic</a>
-              below walk through that math in more detail. This time the policy held the task together on the
-              real arm.
+              I trained again using the exact same fifty demonstrations, but this time for 30,000 steps instead of
+              5,000. That's roughly 17 full passes over the dataset; the <a href="#infographic">infographic</a> walks
+              through the math. I tracked the run in Weights &amp; Biases (W&amp;B) so I could watch the learning
+              happen, and I learned how loss curves work (see the <a href="#training-charts">training charts</a>).
+              The second policy worked! <em>The demonstration dataset hadn't been the bottleneck; my patience was!</em>
               <a href="https://huggingface.co/cpstroum/so101-brachiomimus-block-movement-v2" target="_blank" rel="noreferrer">View this policy (v2) →</a>
             </p>
           </div>
@@ -461,14 +462,18 @@
     <section id="training-charts">
       <h2>Training charts</h2>
       <p class="section-intro">
-        This report shows three curves from the v2 training run, the one that worked. 
-        - <b>Loss</b> is the overall metric for how wrong the policy's predictions are; 
-        it should trend downward as training goes on. 
-        - <b>L1</b> measures that same kind of error more directly, as the average distance 
-        between the arm position the policy predicted and the real one.
-        - <b>KLD</b> (KL divergence) is a more technical measure of how  much the model's internal 
-        representation is drifting; it matters less for this story, but flat and
-        stable is a good sign, while wild swings would not be. 
+        This report shows three curves from the v2 training run, the one that worked.
+      </p>
+      <ul class="section-intro">
+        <li><b>Loss</b> is the overall measure of how wrong the policy's predictions are. It should trend
+        down as training goes on.</li>
+        <li><b>L1</b> measures the same kind of error more directly: the average distance between the arm
+        position the policy predicted and the real one.</li>
+        <li><b>KLD</b> (KL divergence) is a more technical measure of how much the model's internal
+        representation is drifting. It matters less here, but flat and stable is a good sign; wild swings
+        would not be.</li>
+      </ul>
+      <p class="section-intro">
         
         I didn't track my v1 policy run, so this is not a before-and-after comparison. Just nice to visualize.
       </p>
@@ -480,8 +485,7 @@
     <section id="infographic">
       <h2>The infographic</h2>
       <p class="section-intro">
-        This is the training behavior in plain language: how fifty recorded episodes turn into 28,000 individual
-        frames of data. It's also what "30,000 steps" means, broken down into nudges and epochs, where an
+        This is the training math: how fifty recorded episodes turn into 28,000 individual frames of data. It's also what "30,000 steps" means, broken down into nudges and epochs, where an
         epoch is one complete pass through the entire dataset.
       </p>
       <div class="infographic-frame">
@@ -492,8 +496,8 @@
     <section id="resources">
       <h2>Resources</h2>
       <p class="section-intro">
-        Here is the code, the dataset, both saved versions of the trained policy, each one called a checkpoint,
-        and the training run.
+        The code, the dataset, both trained policies (each saved version is called a checkpoint), and the
+        training run.
       </p>
       <ul class="resource-list">
         <li>
